@@ -59,7 +59,7 @@ credentials = pika.PlainCredentials("rabbitmq", "rabbitmq")
 parameters = pika.ConnectionParameters("rmq", 5672, "/", credentials)
 connection = pika.BlockingConnection(parameters)
 channel = connection.channel()
-channel.queue_declare(queue='test')
+channel.queue_declare(queue='cbs')
 
 
 def callback(ch, method, properties, body):
