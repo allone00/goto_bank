@@ -4,7 +4,8 @@
   "description": "Template for agario",
   "main": "js/app.js",
   "scripts": {
-    "start": "./node_modules/.bin/webpack --progress --watch --config webpack.config.js"
+    "start": "./node_modules/.bin/webpack --progress --watch --config webpack.config.js",
+    "build": "./node_modules/.bin/webpack --progress --production --optimize-minimize --config webpack.config.js"
   },
   "author": "xoxo-anastasi-xoxo",
   "devDependencies": {
