@@ -9,4 +9,3 @@ ReactDOM.render(<RegisterButton/>, document.querySelector(
     '.main'
 ));
 
-

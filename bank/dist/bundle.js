@@ -94,7 +94,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\n\nvar _react = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\n\nvar _react2 = _interopRequireDefault(_react);\n\nvar _reactDom = __webpack_require__(/*! react-dom */ \"./node_modules/react-dom/index.js\");\n\nvar _reactDom2 = _interopRequireDefault(_reactDom);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nfunction RegisterButton(props) {\n    return _react2.default.createElement(\n        'button',\n        null,\n        'Hi'\n    );\n}\n\n_reactDom2.default.render(_react2.default.createElement(RegisterButton, null), document.querySelector('.main'));\n\n//# sourceURL=webpack:///./js/app.js?");
+eval("\n\nvar _react = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\n\nvar _react2 = _interopRequireDefault(_react);\n\nvar _reactDom = __webpack_require__(/*! react-dom */ \"./node_modules/react-dom/index.js\");\n\nvar _reactDom2 = _interopRequireDefault(_reactDom);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nfunction RegisterButton(props) {\n    return _react2.default.createElement(\n        'button',\n        null,\n        'Hi'\n    );\n}\n\n_reactDom2.default.render(_react2.default.createElement(RegisterButton, null), document.querySelector('.main'));\n\n/*class App extends React.Component{\r\n    render() {\r\n        return <h1>Привет!</h1>\r\n    }\r\nReactDOM.render(<App/>,\r\n    document.getElementById(\r\n    'app')    */\n\n//# sourceURL=webpack:///./js/app.js?");
 
 /***/ }),
 
