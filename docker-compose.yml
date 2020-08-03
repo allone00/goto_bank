@@ -29,6 +29,15 @@ services:
     restart: always
     volumes:
       - ./CBS:/opt/CBS
+  flask:
+    build: .
+    restart: always
+    environment:
+      PROD: 8081
+    ports:
+      - 8081:8081
+    volumes:
+      - .:/opt
 volumes:
   postgres-banki:
     external: false
