@@ -1,7 +1,7 @@
 """
 Добро пожаловать в АБС всея GoTo!
 """
-
+import time
 # import json
 
 
@@ -49,11 +49,11 @@ def table(money, mark, p, hour):
     return [percent, payout, money, penny]  # todo: В каком формате отправлять таблицу?
 
 
-def rmq():  # for run
-    quit("bonk")
-
-
 def _f(money, hours, mark):  # todo: убрать после поправок ставок
     print(f"interate = {money * ((interate(mark) + 1) ** (hours // 4)) - money},\n"
           f"pennyrate = {money * pennyrate(mark)}.")
     return None
+
+while True:
+    print("test")
+    time.sleep(100)

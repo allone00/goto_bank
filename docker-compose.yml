@@ -24,6 +24,11 @@ services:
       RABBITMQ_NODE_PORT: 5672
     ports:
       - 5672:5672
+  cbs:
+    build: CBS
+    restart: always
+    volumes:
+      - ./CBS:/opt/CBS
 volumes:
   postgres-banki:
     external: false
