@@ -61,5 +61,4 @@ function RegisterButton(props) {
 
 const ButtonBox = () => <div className={'ButtonBox'}></div>;
 
-
 ReactDOM.render(<AuthPage/>, document.querySelector('body'));
