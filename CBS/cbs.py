@@ -1,7 +1,7 @@
 """
 Добро пожаловать в АБС всея GoTo!
 """
-import time
+import pika
 # import json
 
 
@@ -54,6 +54,17 @@ def _f(money, hours, mark):  # todo: убрать после поправок с
           f"pennyrate = {money * pennyrate(mark)}.")
     return None
 
-while True:
-    print("test")
-    time.sleep(100)
+
+credentials = pika.PlainCredentials("rabbitmq", "rabbitmq")
+parameters = pika.ConnectionParameters("rmq", 5672, "/", credentials)
+connection = pika.BlockingConnection(parameters)
+channel = connection.channel()
+channel.queue_declare(queue='test')
+
+
+def callback(ch, method, properties, body):
+    print(ch, method, properties, body)
+
+
+channel.basic_consume(on_message_callback=callback, queue='test', auto_ack=False)
+channel.start_consuming()
