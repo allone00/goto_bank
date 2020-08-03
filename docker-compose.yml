@@ -14,7 +14,7 @@ services:
 
   rmq:
     image: "rabbitmq:3.8.2-management"
-    hostname: ${RABBITMQ_HOSTNAME}
+    hostname: "rmq"
     volumes:
       - "./enabled_plugins:/etc/rabbitmq/enabled_plugins"
     environment:
@@ -29,6 +29,20 @@ services:
     restart: always
     volumes:
       - ./CBS:/opt/CBS
+  test:
+    build: pika_example
+    restart: always
+    volumes:
+      - ./pika_example:/opt/pika_example
+  flask:
+    build: .
+    restart: always
+    environment:
+      PROD: 8081
+    ports:
+      - 8081:8081
+    volumes:
+      - .:/opt
 volumes:
   postgres-banki:
     external: false
