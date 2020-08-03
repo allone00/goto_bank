@@ -4,6 +4,7 @@
     box-sizing: border-box;
     overflow-x: hidden;
     font-family: 'Roboto', sans-serif;
+    outline: none;
 }
 
 .header {
@@ -30,11 +31,12 @@
     width: 100vw;
     background-color: ghostwhite;
     display: flex;
+    flex-direction: column;
 }
 
 .inner_container {
     height: 60vh;
-    width: 75vw;
+    width: 60vw;
     background-color: ghostwhite;
     display: block;
     margin: auto auto;
@@ -47,15 +49,16 @@
     box-shadow: 5px 5px 0 0 black;
 }
 
-.continer_title {
+.container_title {
     font-weight: 500;
     font-size: 50px;
+    margin-top: 20px;
 }
 
 .container_text {
     font-weight: 500;
     font-size: 25px;
-    line-height: 40px;
+    line-height: 80px;
     vertical-align: middle;
 }
 
@@ -69,4 +72,33 @@
 .footer_text {
     line-height: 15vh;
     vertical-align: middle;
+}
+
+.ButtonBox {
+    width: 30vw;
+    height: 50px;
+    background-color: burlywood;
+    margin: auto;
+    margin-top: 100px;
+}
+
+.RegisterButton {
+    font-size: 20px;
+    /*justify-content: space-around;*/
+    color: black;
+    background-color: ghostwhite;
+    border: 1px solid black;
+    width: 80px;
+    height: 40px;
+}
+
+.LoginButton {
+    font-size: 20px;
+    /* justify-content: space-around; */
+    color: black;
+    background-color: ghostwhite;
+    border: 1px solid black;
+    /*margin-left: auto;*/
+    width: 80px;
+    height: 40px;
 }
