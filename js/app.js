@@ -54,7 +54,7 @@ function LoginButton(props) {
 }
 
 function RegisterButton(props) {
-    return <a className={'RegisterButton'} value={'register'}  href={"https://stonks.goto.msk.ru/o/authorize/?state=random_state_string&client_id=M2mY5d4b6NcVKxr2XqKXSxZgpk78WK6ZaU3IxYDd&"}>
+    return <a className={'RegisterButton'} value={'register'}  href={"https://stonks.goto.msk.ru/o/authorize/?state=random_state_string&client_id=M2mY5d4b6NcVKxr2XqKXSxZgpk78WK6ZaU3IxYDd"}>
         Register
     </a>;
 }
