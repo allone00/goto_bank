@@ -1,23 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import '../css/auth.css';
+import '../css/basic.css';
 
 function AuthPage(props) {
     return (
         <div>
-            <Header/>
             <Main/>
             <Footer/>
         </div>
     )
-}
-
-function Header(props) {
-    return <header className={'header'}><Logo/></header>;
-}
-
-function Logo(props) {
-    return <a className={'Logo'} href={"#main_page"}>GoToCredit</a>;
 }
 
 function Main(props) {
@@ -54,7 +46,7 @@ function LoginButton(props) {
 }
 
 function RegisterButton(props) {
-    return <a className={'RegisterButton'} value={'register'}  href={"https://stonks.goto.msk.ru/o/authorize/?state=random_state_string&client_id=M2mY5d4b6NcVKxr2XqKXSxZgpk78WK6ZaU3IxYDd"}>
+    return <a className={'RegisterButton'} value={'register'}  href={"https://stonks.goto.msk.ru/o/authorize/?state=random_state_string&client_id=M2mY5d4b6NcVKxr2XqKXSxZgpk78WK6ZaU3IxYDd&response_type=code"}>
         Register
     </a>;
 }
@@ -67,3 +59,4 @@ function ButtonBox(props) {
 }
 
 ReactDOM.render(<AuthPage/>, document.getElementById('cool'));
+

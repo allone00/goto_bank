@@ -1,35 +1,3 @@
-* {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-    overflow-x: hidden;
-    font-family: 'Roboto', sans-serif;
-    outline: none;
-}
-
-.header {
-    width: 100vw;
-    height: 100vh;
-    background-color: ghostwhite;
-    text-align: center;
-    border-bottom: 1px solid black;
-}
-
-.Logo {
-    color: black;
-    font-size: 50px;
-    text-decoration: none;
-    font-weight: 500;
-    line-height: 100vh;
-    vertical-align: middle;
-    display: inline;
-    transition: all .2s;
-}
-
-.Logo:hover {
-    font-size: 52px;
-}
-
 .main {
     height: 100vh;
     width: 100vw;
