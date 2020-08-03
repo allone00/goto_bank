@@ -1,0 +1,30 @@
+version: '3'
+services:
+  db:
+    image: postgres:10
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: banki
+      POSTGRES_PASSWORD: banki
+      POSTGRES_USER: banki
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres-banki:/var/lib/postgresql/data
+
+  rmq:
+    image: "rabbitmq:3.8.2-management"
+    hostname: ${RABBITMQ_HOSTNAME}
+    volumes:
+      - "./enabled_plugins:/etc/rabbitmq/enabled_plugins"
+    environment:
+      RABBITMQ_DEFAULT_USER: rabbitmq
+      RABBITMQ_DEFAULT_PASS: rabbitmq
+      RABBITMQ_DEFAULT_VHOST: /
+      RABBITMQ_NODE_PORT: 5672
+    ports:
+      - 5672:5672
+volumes:
+  postgres-banki:
+    external: false
+
