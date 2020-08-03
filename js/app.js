@@ -1,36 +1,26 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import '../css/auth.css';
+import '../css/basic.css';
 
 function AuthPage(props) {
     return (
         <div>
-        <Header></Header>
-        <Main></Main>
-        <Footer></Footer>
+            <Main/>
+            <Footer/>
         </div>
-)}
-
-function Header(props) {
-    return <header className={'header'}><Logo></Logo></header>;
-}
-
-function Logo(props) {
-    return <a className={'Logo'} href={"#main_page"}>GoToCredit</a>;
+    )
 }
 
 function Main(props) {
-    return <main className={'main'}><Inner_container></Inner_container></main>;
+    return <main className={'main'}><Inner_container/></main>;
 }
 
 function Inner_container(props) {
     return <div className={'inner_container'}>
-        <ContainerTitle></ContainerTitle>
-        <ContainerText></ContainerText>
-        <ButtonBox>
-            <RegisterButton></RegisterButton>
-            <LoginButton></LoginButton>
-        </ButtonBox>
+        <ContainerTitle/>
+        <ContainerText/>
+        <ButtonBox/>
     </div>;
 }
 
@@ -43,7 +33,7 @@ function ContainerText(props) {
 }
 
 function Footer(props) {
-    return <footer className={'footer'}><Footer_text></Footer_text></footer>;
+    return <footer className={'footer'}><Footer_text/></footer>;
 }
 
 function Footer_text(props) {
@@ -52,13 +42,21 @@ function Footer_text(props) {
 
 
 function LoginButton(props) {
-    return <button className={'LoginButton'} type={'submit'} value={'login'}>Login</button>;
+    return <a className={'LoginButton'} value={'login'} href={"#main_page"}>Login</a>;
 }
 
 function RegisterButton(props) {
-    return <button className={'RegisterButton'} type={'submit'} value={'register'}>Register</button>;
+    return <a className={'RegisterButton'} value={'register'}  href={"https://stonks.goto.msk.ru/o/authorize/?state=random_state_string&client_id=M2mY5d4b6NcVKxr2XqKXSxZgpk78WK6ZaU3IxYDd&response_type=code"}>
+        Register
+    </a>;
 }
 
-const ButtonBox = () => <div className={'ButtonBox'}></div>;
+function ButtonBox(props) {
+    return <div className={'ButtonBox'}>
+        <RegisterButton/>
+        <LoginButton/>
+    </div>;
+}
 
-ReactDOM.render(<AuthPage/>, document.querySelector('body'));
+ReactDOM.render(<AuthPage/>, document.getElementById('cool'));
+
