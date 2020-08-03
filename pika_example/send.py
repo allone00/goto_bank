@@ -1,4 +1,4 @@
-import pika  # pip install pika
+import pika
 import json
 
 
