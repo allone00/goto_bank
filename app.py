@@ -6,7 +6,8 @@ app = Flask(__name__, static_folder='static')
 
 
 @app.route('/')
-def hello_world():
+@app.route('/<path:path>')
+def hello_world(path='/'):
     return render_template('auth.html')
 
 
