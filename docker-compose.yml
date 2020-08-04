@@ -29,11 +29,6 @@ services:
     restart: always
     volumes:
       - ./CBS:/opt/CBS
-  test:
-    build: pika_example
-    restart: always
-    volumes:
-      - ./pika_example:/opt/pika_example
   flask:
     build: .
     restart: always
