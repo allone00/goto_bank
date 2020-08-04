@@ -33,7 +33,7 @@ services:
     build: DBC
     restart: always
     volumes:
-      - ./CBS:/opt/DB
+      - ./DBC:/opt/DB
   flask:
     build: .
     restart: always

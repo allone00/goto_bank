@@ -1,12 +1,12 @@
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String, DateTime, Boolean
+from sqlalchemy import Column, Integer, String, DateTime, Boolean, Float
 from sqlalchemy.orm import sessionmaker
 import pika
 import json
 
 
-db_string = "postgres://banki:banki@localhost:5432/banki"
+db_string = "postgres://banki:banki@db:5432/banki"
 
 db = create_engine(db_string)  
 base = declarative_base()
@@ -32,7 +32,7 @@ class Credit(base):
     user_hash=Column('user_hash',Integer)
     sum=Column('sum',Integer)
     interest=Column('interest',Float)
-    penny_rate=Column('interest',Float)
+    penny_rate=Column('penny_rate',Float)
     approved=Column('approved',Boolean)
     
     def __init__(self,user_hash=None,sum_=None,interest=None,penny_rate=None,approved=None):
