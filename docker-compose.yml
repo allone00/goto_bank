@@ -29,6 +29,11 @@ services:
     restart: always
     volumes:
       - ./CBS:/opt/CBS
+  dbc:
+    build: DBC
+    restart: always
+    volumes:
+      - ./CBS:/opt/DB
   flask:
     build: .
     restart: always
