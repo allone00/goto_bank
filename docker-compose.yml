@@ -29,11 +29,11 @@ services:
     restart: always
     volumes:
       - ./CBS:/opt/CBS
-  test:
-    build: pika_example
+  dbc:
+    build: DBC
     restart: always
     volumes:
-      - ./pika_example:/opt/pika_example
+      - ./CBS:/opt/DB
   flask:
     build: .
     restart: always
