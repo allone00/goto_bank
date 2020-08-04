@@ -3,15 +3,19 @@ from flask import render_template, jsonify, request
 import requests
 import os
 import logging
+import json
 app = Flask(__name__, static_folder='static')
+
+fake_variable = ''
 
 @app.route('/')
 def hello_world():
     return render_template('auth.html')
 
 
-@app.route('/auth', methods=['GET','POST'])
+@app.route('/auth', methods=['GET', 'POST'])
 def request_auth():
+    global fake_variable
     value = request.args.get('code')
     url = 'https://stonks.goto.msk.ru/o/token/'
     myobj = {'client_id': 'M2mY5d4b6NcVKxr2XqKXSxZgpk78WK6ZaU3IxYDd',
@@ -19,7 +23,10 @@ def request_auth():
              'grant_type': 'authorization_code',
              'code': value}
     x = requests.post(url, data=myobj)
-    return x.text
+    token = json.loads(x.text)
+    fake_variable = token
+    return token
+
 
 
 @app.route('/login')
