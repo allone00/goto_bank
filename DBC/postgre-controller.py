@@ -23,10 +23,12 @@ class User(base):
     full_name=Column('full_name', String(32))
     email=Column('email', String(32))
     
-    def __init__(self, reputation=None, mac_address=None,hash_=None):
+    def __init__(self, reputation=None, mac_address=None,hash_=None,full_name=None,email=None):
         self.reputation = reputation
         self.mac_address = mac_address
         self.hash_ = hash_
+        self.full_name = full_name
+        self.email = email
 
 class Credit(base):
     __tablename__ = "Credits"
@@ -38,14 +40,14 @@ class Credit(base):
     approved=Column('approved',Boolean)
     full_name=Column('full_name',String(32))
     
-    def __init__(self,user_hash=None,sum_=None,interest=None,penny_rate=None,approved=None,full_name=None,email=None):
+    def __init__(self,user_hash=None,sum_=None,interest=None,penny_rate=None,approved=None,full_name=None,user_email=None):
         self.user_hash = user_hash
         self.sum = sum_
         self.interest = interest
         self.penny_rate = penny_rate
         self.approved = approved
         self.full_name = full_name
-        self.email = email
+        self.user_email = email
 
 base.metadata.create_all(db)
 
@@ -55,12 +57,12 @@ def addUser(user, session):
 def addCredit(credit,session):
     session.add(credit)
 
-def userExists(user_hash,session):
-    exists = session.query(session.query(User).filter_by(email=email).exists()).scalar()  
+def userExists(user_name,session):
+    exists = session.query(session.query(User).filter_by(full_name=user_name).exists()).scalar()  
     return exists
 
-def creditExists(user_hash,session):
-    exists = session.query(session.query(Credit).filter_by(user_email=user_email).exists()).scalar()  
+def creditExists(user_name,session):
+    exists = session.query(session.query(Credit).filter_by(full_name=user_name).exists()).scalar()  
     return exists
 
 # def approveCredit(user_hash,appr,session):
@@ -83,7 +85,7 @@ def callback(ch, method, properties, body):
     if(body['function']=="ncredit"):
         # check if user exists
         # if user does not exist create a new user
-        if(userExists(body['user_email'], session)==False):
+        if(userExists(body['full_name'], session)==False):
             addUser(User(email=body['user_email'],hash_=body["user_hash"],full_name=body["full_name"],mac_address=body["mac_address"]),session)
         
         addCredit(Credit(user_email=body['user_email'],sum_=body['sum'],interest=25,penny_rate=10,approved=False,full_name=body["full_name"]), session)
