@@ -31,8 +31,8 @@ function Submit() {
         .catch(error => console.log(error))
     };
 
-    formData.append('mac_address', document.querySelector('.MacInput').value);
-    formData.append('amount_input', document.querySelector('.AmountInput').value);
+    formData.append('mac', document.querySelector('.MacInput').value);
+    formData.append('sum', document.querySelector('.AmountInput').value);
 
     send_message(JSON.stringify(formData));
 
@@ -45,11 +45,19 @@ function Submit() {
 export class FirstPage extends React.Component {
     constructor(props) {
         super(props);
-        this.handleChange = this
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.state = {
+            value: 1
+        }
     }
 
     handleChange(event) {
+        this.setState({value: event.target.value});
+    }
 
+    handleSubmit(event) {
+        event.preventDefault();
     }
 
     Main = () => {
@@ -90,10 +98,10 @@ export class FirstPage extends React.Component {
     Form = () => {
         return (<form className={'form'} method={'post'}>
             <label htmlFor={'Mac_field'} className={'MacForm'}>Mac-address: <br/>
-                <input type={'text'} id={'Mac_field'} name={'MAc-field'} className={'MacInput'} pattern={'[A-Z0-9]{2}-[A-Z0-9]{2}-[A-Z0-9]{2}-[A-Z0-9]{2}-[A-Z0-9]{2}-[A-Z0-9]{2}'} placeholder={'AA-AA-AA-AA-AA-AA'}/>
+                <input type={'text'} id={'Mac_field'} name={'MAc-field'} className={'MacInput'} pattern={'[A-Z0-9]{2}-[A-Z0-9]{2}-[A-Z0-9]{2}-[A-Z0-9]{2}-[A-Z0-9]{2}-[A-Z0-9]{2}'} placeholder={'AA-AA-AA-AA-AA-AA'} onChange={this.handleChange}/>
             </label>
             <label htmlFor={'Amount_field'} className={'AmountForm'}>Сумма:<br/>
-                <input type={'number'} max={'10000'} id={'Amount_field'} name={'Amount_field'} className={'AmountInput'} placeholder={'99999999'}/>
+                <input type={'number'} max={'10000'} id={'Amount_field'} name={'Amount_field'} className={'AmountInput'} placeholder={'99999999'} onChange={this.handleChange}/>
             </label>
             {this.RequestButton()}
         </form>)
