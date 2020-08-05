@@ -101,7 +101,7 @@ export class FirstPage extends React.Component {
                 <input type={'text'} id={'Mac_field'} name={'MAc-field'} className={'MacInput'} pattern={'[A-Z0-9]{2}-[A-Z0-9]{2}-[A-Z0-9]{2}-[A-Z0-9]{2}-[A-Z0-9]{2}-[A-Z0-9]{2}'} placeholder={'AA-AA-AA-AA-AA-AA'} onChange={this.handleChange}/>
             </label>
             <label htmlFor={'Amount_field'} className={'AmountForm'}>Сумма:<br/>
-                <input type={'number'} max={'10000'} id={'Amount_field'} name={'Amount_field'} className={'AmountInput'} placeholder={'99999999'} onChange={this.handleChange}/>
+                <input type={'number'} min={'1'} max={'10000'} id={'Amount_field'} name={'Amount_field'} className={'AmountInput'} placeholder={'99999999'} onChange={this.handleChange}/>
             </label>
             {this.RequestButton()}
         </form>)
