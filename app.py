@@ -8,6 +8,12 @@ import pika
 app = Flask(__name__, static_folder='static')
 
 fake_variable = ''
+credentials = pika.PlainCredentials("rabbitmq", "rabbitmq")
+parameters = pika.ConnectionParameters("rmq", 5672, "/", credentials)
+connection = pika.BlockingConnection(parameters)
+channel = connection.channel()
+
+channel.queue_declare(queue='api')
 
 @app.route('/')
 @app.route('/<path:path>')
@@ -60,5 +66,14 @@ channel.basic_publish(exchange='', routing_key='db', body=json.dumps(transferrin
 connection.close()
 
 if __name__ == "__main__":
+    
+    transferring_to_db = {"function": "test_api", "user_hash": fake_variable, "sum": 20000}
+
+    channel.basic_publish(exchange='',
+                    routing_key='db',
+                    body=json.dumps(transferring_to_db))
+
+    # print " [x] Sent 'Hello World!'"
+    connection.close()
     logging.info(os.environ.get('PROD', 8080))
     app.run(host='0.0.0.0', port=os.environ.get('PROD', 8080), debug=True)
