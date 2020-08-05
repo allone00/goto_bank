@@ -6,6 +6,19 @@ import '../css/basic.css';
 function Submit() {
     let formData = new FormData();
 
+    // let requestUrl = 'https://bank.goto.msk.ru/auth';
+    // let request = new XMLHttpRequest();
+    //
+    // request.open('GET', requestUrl);
+    // request.responseType = 'json';
+    // request.send();
+    //
+    // request.onload = function() {
+    //     let json = request.response;
+    // }
+    //
+    // alert(json);
+
     const send_message = (formData) => { fetch('/api/qwerty', {
         method: 'POST',
         headers: {
@@ -18,16 +31,12 @@ function Submit() {
         .catch(error => console.log(error))
     };
 
-    formData.append('username', document.querySelector('.UsernameInput').value);
     formData.append('mac_address', document.querySelector('.MacInput').value);
-    formData.append('mail_input', document.querySelector('.MailInput').value);
     formData.append('amount_input', document.querySelector('.AmountInput').value);
 
     send_message(JSON.stringify(formData));
 
-    document.querySelector('.UsernameInput').value = '';
     document.querySelector('.MacInput').value = '';
-    document.querySelector('.MailInput').value = '';
     document.querySelector('.AmountInput').value = '';
 
 }
@@ -36,6 +45,11 @@ function Submit() {
 export class FirstPage extends React.Component {
     constructor(props) {
         super(props);
+        this.handleChange = this
+    }
+
+    handleChange(event) {
+
     }
 
     Main = () => {
@@ -75,14 +89,8 @@ export class FirstPage extends React.Component {
 
     Form = () => {
         return (<form className={'form'} method={'post'}>
-            <label htmlFor={'Username_field'} className={'UsernameForm'}>ФИО: <br/>
-                <input type={'text'} id={'Username_field'} name={'Username_field'} className={'UsernameInput'} placeholder={'Иванов Иван Иванович'}/>
-            </label>
             <label htmlFor={'Mac_field'} className={'MacForm'}>Mac-address: <br/>
                 <input type={'text'} id={'Mac_field'} name={'MAc-field'} className={'MacInput'} pattern={'[A-Z0-9]{2}-[A-Z0-9]{2}-[A-Z0-9]{2}-[A-Z0-9]{2}-[A-Z0-9]{2}-[A-Z0-9]{2}'} placeholder={'AA-AA-AA-AA-AA-AA'}/>
-            </label>
-            <label htmlFor={'Mail_field'} className={'MailForm'}>Mail:<br/>
-                <input type={'email'} id={'Mail_field'} name={'Mail_field'} className={'MailInput'} placeholder={'example@example.com'}/>
             </label>
             <label htmlFor={'Amount_field'} className={'AmountForm'}>Сумма:<br/>
                 <input type={'number'} max={'10000'} id={'Amount_field'} name={'Amount_field'} className={'AmountInput'} placeholder={'99999999'}/>

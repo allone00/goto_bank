@@ -1,4 +1,5 @@
 import pika
+import json
 
 credentials = pika.PlainCredentials("rabbitmq", "rabbitmq")
 parameters = pika.ConnectionParameters("rmq", 5672, "/", credentials)
@@ -7,7 +8,9 @@ channel = connection.channel()
 
 channel.queue_declare(queue='db')
 channel.queue_declare(queue='api')
-# channel.queue_declare(queue='ui')\
+# channel.queue_declare(queue='ui')
+
+message_from_ui = {}
 
 # print ' [*] Waiting for messages. To exit press CTRL+C'
 
@@ -15,7 +18,8 @@ channel.queue_declare(queue='api')
 #     print " [x] Received %r" % (body,)
 
 def callback(ch, method, properties, body):
-    body = json.loads(body)
+    global message_from_ui
+    message_from_ui = json.loads(body)
 
 channel.basic_consume(on_message_callback=callback, queue='api', auto_ack=False)
 
