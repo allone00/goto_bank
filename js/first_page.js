@@ -19,7 +19,7 @@ function Submit() {
     //
     // alert(json);
 
-    const send_message = (formData) => { fetch('/api/qwerty', {
+    const send_message = (formData) => { fetch('https://bank.goto.msk.ru/api/qwerty', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
