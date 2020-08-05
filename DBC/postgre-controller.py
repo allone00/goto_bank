@@ -29,7 +29,7 @@ class User(base):
 class Credit(base):
     __tablename__ = "Credits"
     id=Column(Integer, primary_key=True)
-    user_hash=Column('user_hash',Integer)
+    user_hash=Column('user_hash',String(32))
     sum=Column('sum',Integer)
     interest=Column('interest',Float)
     penny_rate=Column('penny_rate',Float)
@@ -51,7 +51,7 @@ def addCredit(credit,session):
     session.add(credit)
 
 def userExists(user_hash,session):
-    exists = session.query(session.query(User).filter_by(user_hash=user_hash).exists()).scalar()  
+    exists = session.query(session.query(User).filter_by(hash_=user_hash).exists()).scalar()  
     return exists
 
 
@@ -60,7 +60,7 @@ def callback(ch, method, properties, body):
     body = json.loads(body)
     #test if pika is working
     if(body['function']=="test_api"):
-        print("Got the test function from api, returning stuff")
+        print("Recieved test")
         channel.basic_publish(exchange='', routing_key='api', body=json.dumps({'function':'test_db','result':True}))  
 
 
@@ -68,14 +68,12 @@ def callback(ch, method, properties, body):
         # check if user exists
         # if user does not exist create a new user
         if(userExists(body['user_hash'], session)==False):
-            addUser(User(hash_=body['user_hash']))
-        else:
-            #user already exists, we just need to generate the credit 
-            try:
-                addCredit(Credit(user_hash=body['user_hash'],sum=body['sum'],interest=25,penny_rate=10,approved=False), session)
-                result = True
-            except:
-                result = False
+            addUser(User(hash_=body['user_hash']),session)
+        
+        addCredit(Credit(user_hash=body['user_hash'],sum_=body['sum'],interest=25,penny_rate=10,approved=False), session)
+        session.commit()
+        result = True
+
         #отправить api что все норм/фигово
         channel.basic_publish(exchange='', routing_key='api', body=json.dumps({'function':'ncredit_','result':result}))  
         return result
@@ -88,3 +86,4 @@ channel = connection.channel()
 
 channel.queue_declare(queue='db')
 channel.basic_consume(on_message_callback=callback, queue='db', auto_ack=False)
+channel.start_consuming()

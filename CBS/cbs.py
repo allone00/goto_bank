@@ -66,5 +66,5 @@ def callback(ch, method, properties, body):
     print(ch, method, properties, body)
 
 
-channel.basic_consume(on_message_callback=callback, queue='test', auto_ack=False)
+channel.basic_consume(on_message_callback=callback, queue='cbs', auto_ack=False)
 channel.start_consuming()
