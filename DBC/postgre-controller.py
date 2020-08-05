@@ -20,6 +20,8 @@ class User(base):
     reputation=Column('reputation', String(32))
     mac_address=Column('mac_address', String(32))
     hash_=Column('hash_', String(32))
+    full_name=Column('full_name', String(32))
+    email=Column('email', String(32))
     
     def __init__(self, reputation=None, mac_address=None,hash_=None):
         self.reputation = reputation
@@ -29,11 +31,12 @@ class User(base):
 class Credit(base):
     __tablename__ = "Credits"
     id=Column(Integer, primary_key=True)
-    user_hash=Column('user_hash',String(32))
+    user_email=Column('user_email',String(32))
     sum=Column('sum',Integer)
     interest=Column('interest',Float)
     penny_rate=Column('penny_rate',Float)
     approved=Column('approved',Boolean)
+    full_name=Column('full_name',String(32))
     
     def __init__(self,user_hash=None,sum_=None,interest=None,penny_rate=None,approved=None):
         self.user_hash = user_hash
@@ -51,11 +54,11 @@ def addCredit(credit,session):
     session.add(credit)
 
 def userExists(user_hash,session):
-    exists = session.query(session.query(User).filter_by(hash_=user_hash).exists()).scalar()  
+    exists = session.query(session.query(User).filter_by(email=email).exists()).scalar()  
     return exists
 
 def creditExists(user_hash,session):
-    exists = session.query(session.query(Credit).filter_by(user_hash=user_hash).exists()).scalar()  
+    exists = session.query(session.query(Credit).filter_by(user_email=user_email).exists()).scalar()  
     return exists
 
 # def approveCredit(user_hash,appr,session):
@@ -69,6 +72,7 @@ def callback(ch, method, properties, body):
     global session
     body = json.loads(body)
     #test if pika is working
+    print("Got a message")
     if(body['function']=="test_api"):
         print("Recieved test")
         channel.basic_publish(exchange='', routing_key='api', body=json.dumps({'function':'test_db','result':True}))  
@@ -77,10 +81,10 @@ def callback(ch, method, properties, body):
     if(body['function']=="ncredit"):
         # check if user exists
         # if user does not exist create a new user
-        if(userExists(body['user_hash'], session)==False):
-            addUser(User(hash_=body['user_hash']),session)
+        if(userExists(body['user_email'], session)==False):
+            addUser(User(email=body['user_email']),session)
         
-        addCredit(Credit(user_hash=body['user_hash'],sum_=body['sum'],interest=25,penny_rate=10,approved=False), session)
+        addCredit(Credit(user_email=body['user_email'],sum_=body['sum'],interest=25,penny_rate=10,approved=False,full_name=body["full_name"]), session)
         session.commit()
         result = True
 
