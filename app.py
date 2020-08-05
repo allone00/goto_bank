@@ -7,12 +7,21 @@ import json
 import pika
 app = Flask(__name__, static_folder='static')
 
+<<<<<<< HEAD
 message_from_ui = {}
 credentials = pika.PlainCredentials("rabbitmq", "rabbitmq")
 parameters = pika.ConnectionParameters("rmq", 5672, "/", credentials)
 connection = pika.BlockingConnection(parameters)
 channel = connection.channel()
 channel.queue_declare(queue='api')
+=======
+# fake_variable = '72365027qwerty'
+# credentials = pika.PlainCredentials("rabbitmq", "rabbitmq")
+# parameters = pika.ConnectionParameters("rmq", 5672, "/", credentials)
+# connection = pika.BlockingConnection(parameters)
+# channel = connection.channel()
+# channel.queue_declare(queue='api')
+>>>>>>> aec80a57ff235b3c246cc5d4dfaa83feab25e891
 
 
 @app.route('/')
@@ -25,8 +34,9 @@ def get_message():
     global message_from_ui
     message_from_ui = json.loads(request.get_json())
 
-@app.route('/api/get_token', methods=['POST'])
-def get_t():
+# @app.route('/api/get_token', methods=['POST'])
+# # def get_t():
+
 
 @app.route('/auth', methods=['GET', 'POST'])
 def request_auth():
