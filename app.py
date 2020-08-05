@@ -7,22 +7,12 @@ import json
 import pika
 app = Flask(__name__, static_folder='static')
 
-<<<<<<< HEAD
 message_from_ui = {}
 credentials = pika.PlainCredentials("rabbitmq", "rabbitmq")
 parameters = pika.ConnectionParameters("rmq", 5672, "/", credentials)
 connection = pika.BlockingConnection(parameters)
 channel = connection.channel()
 channel.queue_declare(queue='api')
-=======
-# fake_variable = '72365027qwerty'
-# credentials = pika.PlainCredentials("rabbitmq", "rabbitmq")
-# parameters = pika.ConnectionParameters("rmq", 5672, "/", credentials)
-# connection = pika.BlockingConnection(parameters)
-# channel = connection.channel()
-# channel.queue_declare(queue='api')
->>>>>>> aec80a57ff235b3c246cc5d4dfaa83feab25e891
-
 
 @app.route('/')
 @app.route('/<path:path>')
