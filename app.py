@@ -31,6 +31,7 @@ def get_message():
 
 @app.route('/auth', methods=['GET', 'POST'])
 def request_auth():
+    global message_from_ui
     value = request.args.get('code')
     url = 'https://stonks.goto.msk.ru/o/token/'
     myobj = {'client_id': 'M2mY5d4b6NcVKxr2XqKXSxZgpk78WK6ZaU3IxYDd',
@@ -40,9 +41,6 @@ def request_auth():
     x = requests.post(url, data=myobj)
     token = json.loads(x.text)
     return redirect(f'/form=?token={token}')
-
-
-    global message_from_ui
 
     #get user info by token
     
