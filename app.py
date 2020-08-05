@@ -7,23 +7,26 @@ import json
 import pika
 app = Flask(__name__, static_folder='static')
 
-# message_from_ui = {}
-# credentials = pika.PlainCredentials("rabbitmq", "rabbitmq")
-# parameters = pika.ConnectionParameters("rmq", 5672, "/", credentials)
-# connection = pika.BlockingConnection(parameters)
-# channel = connection.channel()
-# channel.queue_declare(queue='api')
+message_from_ui = {}
+credentials = pika.PlainCredentials("rabbitmq", "rabbitmq")
+parameters = pika.ConnectionParameters("rmq", 5672, "/", credentials)
+connection = pika.BlockingConnection(parameters)
+channel = connection.channel()
+channel.queue_declare(queue='api')
 
 @app.route('/')
 @app.route('/<path:path>')
-def hello_world(path='/'):
+def huh(path='/'):
     return render_template('auth.html')
 
-@app.route('/api/qwerty', methods=['GET'])
+@app.route('/api/qwerty')
 def get_message():
     global message_from_ui
     message_from_ui = request.json()
-    print(message_from_ui)
+    transferring_to_db = {"function": "ncredit", "user_hash":  message_from_ui["token"], "sum": message_from_ui["sum"], "mac": message_from_ui["mac"]}
+    channel.basic_publish(exchange='',
+                    routing_key='db',
+                    body=json.dumps(transferring_to_db))
 
 # @app.route('/api/get_token', methods=['POST'])
 # # def get_t():
@@ -40,15 +43,6 @@ def request_auth():
     x = requests.post(url, data=myobj)
     token = json.loads(x.text)
     return redirect(f'/form=?token={token}')
-
-
-    global message_from_ui
-
-    transferring_to_db = {"function": "ncredit", "user_hash": token, "sum": message_from_ui["sum"], "mac": message_from_ui["mac"]}
-    channel.basic_publish(exchange='',
-                    routing_key='db',
-                    body=json.dumps(transferring_to_db))
-    return token
 
 
 
