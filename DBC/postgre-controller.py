@@ -54,6 +54,16 @@ def userExists(user_hash,session):
     exists = session.query(session.query(User).filter_by(hash_=user_hash).exists()).scalar()  
     return exists
 
+def creditExists(user_hash,session):
+    exists = session.query(session.query(Credit).filter_by(user_hash=user_hash).exists()).scalar()  
+    return exists
+
+def approveCredit(user_hash,appr,session):
+    credit = session.query(session.query(Credit).filter_by(user_hash=user_hash).first()
+    credit.approved = appr
+    session.commit()
+    return True
+
 
 def callback(ch, method, properties, body):
     global session
@@ -75,8 +85,17 @@ def callback(ch, method, properties, body):
         result = True
 
         #отправить api что все норм/фигово
-        channel.basic_publish(exchange='', routing_key='api', body=json.dumps({'function':'ncredit_','result':result}))  
+        #channel.basic_publish(exchange='', routing_key='api', body=json.dumps({'function':'ncredit_','result':result}))  
         return result
+
+    if(body["function"]=="acredit"):
+        #check if credit exists
+        if(creditExists(body['user_hash'], session)):
+            approveCredit(body["user_hash"],body["apprpved"], session)
+            return True
+        else:
+            result=False
+
 
     
 credentials = pika.PlainCredentials("rabbitmq", "rabbitmq")
