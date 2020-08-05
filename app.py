@@ -4,6 +4,7 @@ import requests
 import os
 import logging
 import json
+import pika
 app = Flask(__name__, static_folder='static')
 
 fake_variable = ''
@@ -28,14 +29,35 @@ def request_auth():
     fake_variable = token
     return token
 
+@app.route('/api/qwerty', methods=['POST'])
+def get_message():
+    message_from_ui = request.get_json()
+
+    # sum = request.args.get('sum')
+    # return sum
 
 
-@app.route('/login')
-def rel_login():
-    t = 'boo'
-    return t.text
 
 
+
+# @app.route('/login')
+# def rel_login():
+#     t = 'boo'
+#     return t.text
+
+credentials = pika.PlainCredentials("rabbitmq", "rabbitmq")
+parameters = pika.ConnectionParameters("rmq", 5672, "/", credentials)
+connection = pika.BlockingConnection(parameters)
+channel = connection.channel()
+
+channel.queue_declare(queue='db')
+
+transferring_to_db = {"function": "ncredit", "user_hash": fake_variable, "sum": 20000,  }
+
+channel.basic_publish(exchange='', routing_key='db', body=json.dumps(transferring_to_db))
+
+# print " [x] Sent 'Hello World!'"
+connection.close()
 
 if __name__ == "__main__":
     logging.info(os.environ.get('PROD', 8080))
