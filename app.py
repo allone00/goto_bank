@@ -1,5 +1,5 @@
 from flask import Flask
-from flask import render_template, request
+from flask import render_template, request, redirect
 import requests
 import os
 import logging
@@ -7,22 +7,23 @@ import json
 import pika
 app = Flask(__name__, static_folder='static')
 
-message_from_ui = {}
-credentials = pika.PlainCredentials("rabbitmq", "rabbitmq")
-parameters = pika.ConnectionParameters("rmq", 5672, "/", credentials)
-connection = pika.BlockingConnection(parameters)
-channel = connection.channel()
-channel.queue_declare(queue='api')
+# message_from_ui = {}
+# credentials = pika.PlainCredentials("rabbitmq", "rabbitmq")
+# parameters = pika.ConnectionParameters("rmq", 5672, "/", credentials)
+# connection = pika.BlockingConnection(parameters)
+# channel = connection.channel()
+# channel.queue_declare(queue='api')
 
 @app.route('/')
 @app.route('/<path:path>')
 def hello_world(path='/'):
     return render_template('auth.html')
 
-@app.route('/api/qwerty', methods=['POST'])
+@app.route('/api/qwerty', methods=['GET'])
 def get_message():
     global message_from_ui
-    message_from_ui = json.loads(request.get_json())
+    message_from_ui = request.json()
+    print(message_from_ui)
 
 # @app.route('/api/get_token', methods=['POST'])
 # # def get_t():
@@ -30,7 +31,6 @@ def get_message():
 
 @app.route('/auth', methods=['GET', 'POST'])
 def request_auth():
-    global message_from_ui
     value = request.args.get('code')
     url = 'https://stonks.goto.msk.ru/o/token/'
     myobj = {'client_id': 'M2mY5d4b6NcVKxr2XqKXSxZgpk78WK6ZaU3IxYDd',
@@ -39,7 +39,12 @@ def request_auth():
             'code': value}
     x = requests.post(url, data=myobj)
     token = json.loads(x.text)
-    transferring_to_db = {"function": "credit", "user_hash": token, "sum": message_from_ui["sum"], "mac": message_from_ui["mac"]}
+    return redirect(f'/form=?token={token}')
+
+
+    global message_from_ui
+
+    transferring_to_db = {"function": "ncredit", "user_hash": token, "sum": message_from_ui["sum"], "mac": message_from_ui["mac"]}
     channel.basic_publish(exchange='',
                     routing_key='db',
                     body=json.dumps(transferring_to_db))
