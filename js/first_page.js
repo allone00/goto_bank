@@ -6,18 +6,16 @@ import '../css/basic.css';
 function Submit() {
     let formData = new FormData();
 
-    // let requestUrl = 'https://bank.goto.msk.ru/auth';
-    // let request = new XMLHttpRequest();
-    //
-    // request.open('GET', requestUrl);
-    // request.responseType = 'json';
-    // request.send();
-    //
-    // request.onload = function() {
-    //     let json = request.response;
-    // }
-    //
-    // alert(json);
+    let requestUrl = 'https://bank.goto.msk.ru/form/';
+    let request = new XMLHttpRequest();
+
+    request.open('GET', requestUrl);
+    request.responseType = 'json';
+    request.send();
+
+    request.onload = function() {
+        let json = request.response;
+    }
 
     const send_message = (formData) => { fetch('https://bank.goto.msk.ru/api/qwerty', {
         method: 'POST',
@@ -33,6 +31,7 @@ function Submit() {
 
     formData.append('mac', document.querySelector('.MacInput').value);
     formData.append('sum', document.querySelector('.AmountInput').value);
+    formData.append('token', json.token);
 
     send_message(JSON.stringify(formData));
 
@@ -47,16 +46,15 @@ export class FirstPage extends React.Component {
         super(props);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.state = {
-            value: 1
-        }
+        this.state = {};
     }
 
     handleChange(event) {
-        this.setState({value: event.target.value});
+        this.setState({[event.target.name]: event.target.value});
     }
 
     handleSubmit(event) {
+        alert(this.state);
         event.preventDefault();
     }
 
@@ -96,12 +94,12 @@ export class FirstPage extends React.Component {
     }
 
     Form = () => {
-        return (<form className={'form'} method={'post'}>
+        return (<form className={'form'} method={'post'} onSubmit={this.handleSubmit}>
             <label htmlFor={'Mac_field'} className={'MacForm'}>Mac-address: <br/>
-                <input type={'text'} id={'Mac_field'} name={'MAc-field'} className={'MacInput'} pattern={'[A-Z0-9]{2}-[A-Z0-9]{2}-[A-Z0-9]{2}-[A-Z0-9]{2}-[A-Z0-9]{2}-[A-Z0-9]{2}'} placeholder={'AA-AA-AA-AA-AA-AA'} onChange={this.handleChange}/>
+                <input type={'text'} id={'Mac_field'} name={'macField'} className={'MacInput'} pattern={'[A-Z0-9]{2}-[A-Z0-9]{2}-[A-Z0-9]{2}-[A-Z0-9]{2}-[A-Z0-9]{2}-[A-Z0-9]{2}'} placeholder={'AA-AA-AA-AA-AA-AA'} onChange={this.handleChange}/>
             </label>
             <label htmlFor={'Amount_field'} className={'AmountForm'}>Сумма:<br/>
-                <input type={'number'} max={'10000'} id={'Amount_field'} name={'Amount_field'} className={'AmountInput'} placeholder={'99999999'} onChange={this.handleChange}/>
+                <input type={'number'} min={'1'} max={'10000'} id={'Amount_field'} name={'amountField'} className={'AmountInput'} placeholder={'99999999'} onChange={this.handleChange}/>
             </label>
             {this.RequestButton()}
         </form>)
