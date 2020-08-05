@@ -58,11 +58,11 @@ def creditExists(user_hash,session):
     exists = session.query(session.query(Credit).filter_by(user_hash=user_hash).exists()).scalar()  
     return exists
 
-def approveCredit(user_hash,appr,session):
-    credit = session.query(session.query(Credit).filter_by(user_hash=user_hash).first()
-    credit.approved = appr
-    session.commit()
-    return True
+# def approveCredit(user_hash,appr,session):
+#     credit = session.query(session.query(Credit).filter_by(user_hash=user_hash).first()
+#     credit.approved = appr
+#     session.commit()
+#     return True
 
 
 def callback(ch, method, properties, body):
@@ -88,13 +88,13 @@ def callback(ch, method, properties, body):
         #channel.basic_publish(exchange='', routing_key='api', body=json.dumps({'function':'ncredit_','result':result}))  
         return result
 
-    if(body["function"]=="acredit"):
-        #check if credit exists
-        if(creditExists(body['user_hash'], session)):
-            approveCredit(body["user_hash"],body["apprpved"], session)
-            return True
-        else:
-            return False
+    # if(body["function"]=="acredit"):
+    #     #check if credit exists
+    #     if(creditExists(body['user_hash'], session)):
+    #         approveCredit(body["user_hash"],body["apprpved"], session)
+    #         return True
+    #     else:
+    #         return False
 
 
     
