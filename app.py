@@ -16,17 +16,14 @@ channel.queue_declare(queue='api')
 
 @app.route('/')
 @app.route('/<path:path>')
-def huh(path='/'):
+def hello_world(path='/'):
     return render_template('auth.html')
 
-@app.route('/api/qwerty')
+@app.route('/api/qwerty', methods=['GET'])
 def get_message():
     global message_from_ui
     message_from_ui = request.json()
-    transferring_to_db = {"function": "ncredit", "user_hash":  message_from_ui["token"], "sum": message_from_ui["sum"], "mac": message_from_ui["mac"]}
-    channel.basic_publish(exchange='',
-                    routing_key='db',
-                    body=json.dumps(transferring_to_db))
+    print(message_from_ui)
 
 # @app.route('/api/get_token', methods=['POST'])
 # # def get_t():
@@ -34,6 +31,7 @@ def get_message():
 
 @app.route('/auth', methods=['GET', 'POST'])
 def request_auth():
+    global message_from_ui
     value = request.args.get('code')
     url = 'https://stonks.goto.msk.ru/o/token/'
     myobj = {'client_id': 'M2mY5d4b6NcVKxr2XqKXSxZgpk78WK6ZaU3IxYDd',
@@ -42,6 +40,15 @@ def request_auth():
             'code': value}
     x = requests.post(url, data=myobj)
     token = json.loads(x.text)
+
+    #get user info by token
+
+    info = json.loads( requests.post("http://stonks.goto.msk.ru/api/bank/",headers={'Authorization':f'Bearer {token}'}) )
+    
+    transferring_to_db = {"function": "ncredit", "user_hash": token, "sum": message_from_ui["sum"], "mac_address": message_from_ui["mac"], "user_email":info["email"], "full_name":(info["first_name"]+info["last_name"])}
+    channel.basic_publish(exchange='',
+                    routing_key='db',
+                    body=json.dumps(transferring_to_db))
     return redirect(f'/form=?token={token}')
 
 
