@@ -1,8 +1,10 @@
 FROM python:3
 
+RUN pip install pika
+RUN pip install sqlalchemy
+RUN pip install psycopg2
+
 ADD . /opt/DB
 WORKDIR /opt/DB
-
-RUN pip install -r requirements.txt
 
 CMD python postgre-controller.py
