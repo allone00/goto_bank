@@ -38,12 +38,14 @@ class Credit(base):
     approved=Column('approved',Boolean)
     full_name=Column('full_name',String(32))
     
-    def __init__(self,user_hash=None,sum_=None,interest=None,penny_rate=None,approved=None):
+    def __init__(self,user_hash=None,sum_=None,interest=None,penny_rate=None,approved=None,full_name=None,email=None):
         self.user_hash = user_hash
         self.sum = sum_
         self.interest = interest
         self.penny_rate = penny_rate
         self.approved = approved
+        self.full_name = full_name
+        self.email = email
 
 base.metadata.create_all(db)
 
@@ -82,7 +84,7 @@ def callback(ch, method, properties, body):
         # check if user exists
         # if user does not exist create a new user
         if(userExists(body['user_email'], session)==False):
-            addUser(User(email=body['user_email']),session)
+            addUser(User(email=body['user_email'],hash_=body["user_hash"],full_name=body["full_name"],mac_address=body["mac_address"]),session)
         
         addCredit(Credit(user_email=body['user_email'],sum_=body['sum'],interest=25,penny_rate=10,approved=False,full_name=body["full_name"]), session)
         session.commit()

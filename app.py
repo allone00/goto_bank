@@ -44,7 +44,8 @@ def request_auth():
 
     global message_from_ui
 
-    transferring_to_db = {"function": "ncredit", "user_hash": token, "sum": message_from_ui["sum"], "mac": message_from_ui["mac"]}
+    token_info = None
+    transferring_to_db = {"function": "ncredit", "user_hash": token, "sum": message_from_ui["sum"], "mac_address": message_from_ui["mac"], "user_email":token_info, "full_name":toke_info}
     channel.basic_publish(exchange='',
                     routing_key='db',
                     body=json.dumps(transferring_to_db))
