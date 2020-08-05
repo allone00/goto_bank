@@ -94,7 +94,7 @@ def callback(ch, method, properties, body):
             approveCredit(body["user_hash"],body["apprpved"], session)
             return True
         else:
-            result=False
+            return False
 
 
     
