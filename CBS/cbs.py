@@ -42,6 +42,9 @@ def pennyrate(mark: int):  # todo: поправить ставки
 
 
 def table(credit, transactions):
+    """
+    Возвращает таблицу по кредиту в виде двухмерного массива
+    """
     money, rate, penny, start, days = credit["money"], credit["rate"], credit["penny"], credit["start"], credit["days"]
     transactions_per_day = [None for _ in range(days+1)]
     for transaction in transactions:
@@ -110,13 +113,10 @@ def table(credit, transactions):
     return s
 
 
-def _f(money, hours, mark):  # todo: убрать после поправок ставок
-    print(f"interate = {money * ((interate(mark) + 1) ** (hours // 4)) - money},\n"
-          f"pennyrate = {money * pennyrate(mark)}.")
-    return None
-
-
 def send(queue, ans):
+    """
+    Отправляет сообщения через RMQ другим участникам проекта
+    """
     body = json.dumps(ans)
     connection = pika.BlockingConnection(pika.ConnectionParameters(
         "rmq", 5672, "/", pika.PlainCredentials("rabbitmq", "rabbitmq")))
@@ -127,9 +127,16 @@ def send(queue, ans):
 
 
 def callback(a, b, c, body):
+    """
+    Обрабатывает все запросы от RMQ
+    """
     body = json.loads(body)
+<<<<<<< HEAD
     print("дааааааа")
+    if body["function"] == "table":
+=======
     if body["type"] == "table":
+>>>>>>> 9dd59fe414d2d503948ad3fc0f18873f0aaf285e
         send("api", {"type": "table", "table": table(body["credit"], body["transactions"])})
     else:
         print("sber", end="")
@@ -141,4 +148,4 @@ if __name__ == "__main__":
         "rmq", 5672, "/", pika.PlainCredentials("rabbitmq", "rabbitmq"))).channel()
     channel.queue_declare(queue='cbs')
     channel.basic_consume(on_message_callback=callback, queue='cbs', auto_ack=False)
-    channel.start_consuming()
+    #channel.start_consuming()
