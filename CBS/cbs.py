@@ -114,6 +114,9 @@ def table(credit, transactions):
 
 
 def send(queue, ans):
+    """
+    Отправляет сообщения через RMQ другим участникам проекта
+    """
     body = json.dumps(ans)
     connection = pika.BlockingConnection(pika.ConnectionParameters(
         "rmq", 5672, "/", pika.PlainCredentials("rabbitmq", "rabbitmq")))
@@ -124,6 +127,9 @@ def send(queue, ans):
 
 
 def callback(a, b, c, body):
+    """
+    Обрабатывает все запросы от RMQ
+    """
     body = json.loads(body)
     if body["type"] == "table":
         send("api", {"type": "table", "table": table(body["credit"], body["transactions"])})
