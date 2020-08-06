@@ -41,26 +41,28 @@ def pennyrate(mark: int):  # todo: поправить ставки
     ][mark - 1]
 
 
-def table(money, rate, penny, start, days, transactions):  # todo: Как получать транкзации
+def table(money, rate, penny, start, days, transactions):
+    transactions_per_day = [None for _ in range(days+1)]
+    for transaction in transactions:
+        day = (transaction["date"] - start) // 12 + 1
+        transactions_per_day[day] = {"money": transaction["money"], "hours": (transaction["date"] - start) % 12}
     p = money * (rate + (rate / ((rate + 1) ** days - 1)))
-    s = [["Оплата", "Часов неуплачено", "Общий долг", "Реальный платёж", "Платёж в день",
+    s = [["Оплата №", "Часов неуплачено", "Общий долг", "Реальный платёж", "Платёж в день",
           "Уплачено погашение процентов", "Просрочка погашение процентов", "Погашение процентов",
           "Уплачено погашение долга", "Просрочка погашения долга", "Погашение долга", "Уплачено пенни",
           "Просрочка пенни", "Пенни", "Уплачено пользование ОД", "Просрочка пользование ОД", "Пользование ОД",
           "Переплата"]]
     for day in range(1, days + 1):
-        hours = [0, 0, 0, 0, 0, 12, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0][day]
         ss = [None for _ in range(18)]
-        ss[3] = [p, p, p, p, p, 0, 1000000, p, p, p, p, p, p, p, p, p, p, p, p][day]
+        ss[3] = transactions_per_day[day]["money"]
         ss[0] = day
-        ss[1] = hours
+        ss[1] = transactions_per_day[day]["hours"]
         if day == 1:
             ss[2] = money
         else:
             ss[2] = s[day - 1][2] - s[day - 1][8]
         if day == days:
             ss[4] = ss[2] * (1 + rate)
-            ss[3] = ss[4]
         else:
             ss[4] = p
         ss[7] = ss[2] * rate
