@@ -17,9 +17,9 @@ testing = True
 credentials = pika.PlainCredentials("rabbitmq", "rabbitmq")
 parameters = pika.ConnectionParameters("rmq", 5672, "/", credentials)
 connection = pika.BlockingConnection(parameters)
+
 channel = connection.channel()
 channel.queue_declare(queue='api')
-channel.queue_declare(queue='bd')
 
 def callback(ch, method, properties, body):
     global credits
@@ -30,8 +30,12 @@ def callback(ch, method, properties, body):
         credits = body["credits"]
         app.logger.info(credits)
 
-channel.basic_consume(on_message_callback=callback, queue='db', auto_ack=False)
-channel.start_consuming()
+def a():
+    channel = connection.channel()
+    channel.queue_declare(queue='api')
+    channel.basic_consume(on_message_callback=callback, queue='db', auto_ack=False)
+    channel.start_consuming()
+
 
 
 @app.route('/')
@@ -43,6 +47,8 @@ def hello_world():
 def returnCredits():
     credits = None
     channel.basic_publish(exchange='', routing_key="cbs", body=json.dumps({"function":"listCredits"}))
+
+    _thread.start_new_thread(a,(list,tuple))
     
     #wait for credits, then return the info
     while(credits is None):
