@@ -46,7 +46,7 @@ class Credit(base):
         self.penny_rate = penny_rate
         self.approved = approved
         self.full_name = full_name
-        self.user_email = email
+        self.user_email = user_email
 
 base.metadata.create_all(db)
 

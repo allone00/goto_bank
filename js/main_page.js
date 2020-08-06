@@ -1,9 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import '../css/auth.css';
 import '../css/basic.css';
-import '../css/login.css';
-
+import '../css/main.css';
 
 function Submit() {
     let formData = new FormData();
@@ -13,7 +11,7 @@ function Submit() {
 
     let token = url.slice(7, url.length);
 
-    const send_message = (formData) => { fetch('https://bank.goto.msk.ru/api/qwerty', {
+    const send_message = (formData) => { fetch('/api/qwerty', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
@@ -35,7 +33,6 @@ function Submit() {
     document.querySelector('.AmountInput').value = '';
 
     alert('Мы рассмотрим заявку в течении 72 часов!\n С любовью GoToBank!');
-
 }
 
 

@@ -6,29 +6,32 @@
     flex-direction: column;
 }
 
-.inner_container {
+.Inner_container {
     height: 70vh;
     width: 60vw;
     background-color: ghostwhite;
-    display: block;
+    display: flex;
     margin: auto auto;
     border: 1px solid black;
     transition: all .2s;
     text-align: center;
     overflow-y: hidden;
+    flex-direction: column;
 }
 
-.inner_container:hover {
+.Inner_container:hover {
     box-shadow: 5px 5px 0 0 black;
 }
 
-.container_title {
+.Container_title {
     font-weight: 500;
     font-size: 50px;
-    margin-top: 20px;
+    margin: 20px auto;
+    width: 100%;
+    height: 30%;
 }
 
-.container_text {
+.Container_text {
     font-weight: 500;
     font-size: 25px;
     line-height: 80px;
@@ -47,41 +50,16 @@
     vertical-align: middle;
 }
 
-.ButtonBox {
-    width: 32.5vw;
-    height: 60px;
-    /*background-color: burlywood;*/
-    margin: auto;
-    display: flex;
-    margin-top: 20px;
-}
-
-.RequestButton {
-    font-size: 20px;
-    font-weight: 500;
-    /*justify-content: space-around;*/
-    color: black;
-    background-color: ghostwhite;
-    border: 1px solid black;
-    width: 85px;
-    height: 50px;
-    line-height: 50px;
-    vertical-align: middle;
-    transition: all .2s;
-    overflow-y: hidden;
-    margin: auto;
-    text-decoration: none;
-}
 .AuthButton {
-    font-size: 20px;
+    font-size: 24px;
     font-weight: 500;
     /*justify-content: space-around;*/
     color: black;
     background-color: ghostwhite;
     border: 1px solid black;
-    width: 85px;
-    height: 50px;
-    line-height: 50px;
+    width: 100px;
+    height: 65px;
+    line-height: 65px;
     display: block;
     vertical-align: middle;
     transition: all .2s;
@@ -89,45 +67,7 @@
     margin: auto;
     text-decoration: none;
 }
-.RequestButton:hover, .AuthButton:hover{
+
+.AuthButton:hover {
     box-shadow: 2.5px 2.5px 0 0 black;
-}
-
-.form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-    width: 100%;
-    height: 60%;
-    /*background-color: burlywood;*/
-    font-weight: 500;
-}
-
-.MacForm {
-    padding: 10px;
-    width: 60%;
-    height: 30%;
-}
-
-.MacInput {
-    width: 100%;
-    height: 60%;
-    padding: 5px;
-    font-size: 18px;
-    margin-top: 5px;
-}
-
-.AmountForm {
-    padding: 10px;
-    width: 60%;
-    height: 30%;
-}
-
-.AmountInput {
-    width: 100%;
-    height: 60%;
-    margin-top: 5px;
-    padding: 10px;
-    font-size: 18px;
 }
