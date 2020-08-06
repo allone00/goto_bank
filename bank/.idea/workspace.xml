@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="f86d5f91-f934-49d5-aa6d-4e1b3152f431" name="Default Changelist" comment="dfsdf" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="1fIz6G9lLsSzOjv0wlHuNzEA5oK" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+  </component>
+  <component name="RunManager">
+    <configuration name="auth.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/agario_base/auth.html" useBuiltInWebServerPort="true">
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JavaScript Debug.auth.html" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="f86d5f91-f934-49d5-aa6d-4e1b3152f431" name="Default Changelist" comment="" />
+      <created>1595920218121</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1595920218121</updated>
+      <workItem from="1595920223309" duration="3234000" />
+      <workItem from="1595923486156" duration="11982000" />
+      <workItem from="1595942314751" duration="11961000" />
+      <workItem from="1596015362389" duration="909000" />
+      <workItem from="1596090358220" duration="6484000" />
+      <workItem from="1596122421767" duration="1955000" />
+      <workItem from="1596177157789" duration="8255000" />
+      <workItem from="1596378976010" duration="3215000" />
+      <workItem from="1596382618172" duration="1662000" />
+      <workItem from="1596434013677" duration="2841000" />
+    </task>
+    <task id="LOCAL-00001" summary="dfsdf">
+      <created>1596436776000</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1596436776000</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="2" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="dfsdf" />
+    <option name="LAST_COMMIT_MESSAGE" value="dfsdf" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="455" y="114" key="FileChooserDialogImpl" timestamp="1596192725144">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="455" y="114" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1596192725144" />
+    <state x="184" y="0" key="SettingsEditor" timestamp="1596382163402">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="184" y="0" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1596382163402" />
+    <state x="275" y="95" key="Vcs.Push.Dialog.v2" timestamp="1596436778861">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="275" y="95" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1596436778861" />
+    <state x="492" y="276" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1596436271928">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="492" y="276" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1366.728@0.0.1366.728" timestamp="1596436271928" />
+    <state x="239" y="131" width="987" height="546" key="dock-window-1" timestamp="1596379763311">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="239" y="131" width="987" height="546" key="dock-window-1/0.0.1366.728@0.0.1366.728" timestamp="1596379763311" />
+    <state x="0" y="0" width="585" height="728" key="find.popup" timestamp="1596381014594">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="0" y="0" width="585" height="728" key="find.popup/0.0.1366.728@0.0.1366.728" timestamp="1596381014594" />
+    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup" timestamp="1595947144897">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup/0.0.1366.728@0.0.1366.728" timestamp="1595947144897" />
+  </component>
+</project>

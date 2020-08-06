@@ -72,8 +72,24 @@
     margin: auto;
     text-decoration: none;
 }
-
-.RequestButton:hover {
+.AuthButton {
+    font-size: 20px;
+    font-weight: 500;
+    /*justify-content: space-around;*/
+    color: black;
+    background-color: ghostwhite;
+    border: 1px solid black;
+    width: 85px;
+    height: 50px;
+    line-height: 50px;
+    display: block;
+    vertical-align: middle;
+    transition: all .2s;
+    overflow-y: hidden;
+    margin: auto;
+    text-decoration: none;
+}
+.RequestButton:hover, .AuthButton:hover{
     box-shadow: 2.5px 2.5px 0 0 black;
 }
 
