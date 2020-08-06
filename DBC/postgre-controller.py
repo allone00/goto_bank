@@ -1,7 +1,7 @@
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String, DateTime, Boolean, Float
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, relationship
 import pika
 import json
 
@@ -39,6 +39,7 @@ class Credit(base):
     penny_rate=Column('penny_rate',Float)
     approved=Column('approved',Boolean)
     full_name=Column('full_name',String(32))
+    transactions = relationship("Transactions")  # CBS
     
     def __init__(self,sum_=None,interest=None,penny_rate=None,approved=None,full_name=None,user_email=None):
         self.sum = sum_
@@ -47,6 +48,17 @@ class Credit(base):
         self.approved = approved
         self.full_name = full_name
         self.user_email = user_email
+
+
+# CBS
+class Transactions(base):
+    __tablename__ = "Transactions"
+    id = Column(Integer, primary_key=True)
+    money = Column("money", Integer)
+    day = Column("day", Integer)
+    hours_late = Column("hours_late", Integer)
+    credit_id = Column(Integer, ForeignKey('Transactions.id'))
+
 
 base.metadata.create_all(db)
 
@@ -86,6 +98,30 @@ def callback(ch, method, properties, body):
         session.commit()
         result = True
         return result
+
+    # CBS
+    if body["function"] == "table":
+        # credit =
+        # ans = {"credit": {
+        #     "sum": credit.sum,
+        #     "interest": credit.interest,
+        #     "penny_rate": credit.penny_rate
+        # }, "transactions" [{
+        #     "money": transaction.money
+        #     "day": transaction.day
+        #     "hours_late": transaction.hours_late
+        # } for transaction in transactions]
+        # }
+        ans = {"type": "table", "sber": "bonk"}  # Test
+
+        body = json.dumps(ans)
+        connection = pika.BlockingConnection(pika.ConnectionParameters(
+            "rmq", 5672, "/", pika.PlainCredentials("rabbitmq", "rabbitmq")))
+        channel = connection.channel()
+        channel.queue_declare(queue="cbs")
+        channel.basic_publish(exchange='', routing_key="cbs", body=body)
+        connection.close()
+
 
 credentials = pika.PlainCredentials("rabbitmq", "rabbitmq")
 parameters = pika.ConnectionParameters("rmq", 5672, "/", credentials)
