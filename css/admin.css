@@ -48,6 +48,7 @@
 .input {
     font-size: 16px;
     font-weight: 500;
+    padding: 5px;
 }
 
 .button {
@@ -65,7 +66,7 @@
     text-align: center;
     line-height: 7vh;
     overflow-y: hidden;
-    transition: all .2s;Ну ладно, дома тогда зашью
+    transition: all .2s;
 }
 
 .button:hover {
