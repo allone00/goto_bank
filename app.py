@@ -36,7 +36,7 @@ def get_message():
     #get user info by token
     info = json.loads(requests.get("http://stonks.goto.msk.ru/api/bank/", headers={'Authorization':f'Bearer {token}'}).text)
     app.logger.info("debug 3")
-    transferring_to_db = {"function": "ncredit", "user_hash": token, "sum": message_from_ui["sum"], "mac_address": message_from_ui["mac"], "user_email":info["email"], "full_name":(info["first_name"]+info["last_name"])}
+    transferring_to_db = {"function": "ncredit", "user_hash": token, "sum": message_from_ui["sum"], "mac_address": message_from_ui["mac"], "user_email":info["email"], "full_name":(info["first_name"]+" "+info["last_name"])}
     channel.basic_publish(exchange='',
                     routing_key='db',
                     body=json.dumps(transferring_to_db))

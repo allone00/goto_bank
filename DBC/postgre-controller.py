@@ -77,7 +77,6 @@ def creditExists(user_name,session):
 
 def callback(ch, method, properties, body):
     global session
-    print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
     body = json.loads(body)
     #test if pika is working
     print("Got a message")
@@ -98,8 +97,16 @@ def callback(ch, method, properties, body):
         result = True
         return result
 
+    if(body["function"]=="listCredits"):
+        credits = []
+        for cr in session.query(Credit).all():
+            credits.append({"id":cr.id, "full_name":cr.full_name, "interest":cr.interest, "sum":cr.sum})
+        
+        channel.basic_publish(exchange='', routing_key='api', body=json.dumps({'function':'listCredits_','credits':credits}))  
+        return True
+
     # CBS
-    if body["function"] == "table":
+    if(body["function"] == "table"):
         # credit =
         # ans = {"credit": {
         #     "sum": credit.sum,
