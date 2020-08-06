@@ -1,15 +1,16 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import '../css/basic.css';
 import '../css/main.css';
 
 function Submit() {
-    let formData = new FormData();
+    let formData = {};
 
     let requestUrl = 'https://bank.goto.msk.ru/form/';
     let url = window.location.search;
 
-    let token = url.slice(7, url.length);
+    let token = url.slice(6, url.length);
+
+    // console.log(url);
 
     const send_message = (formData) => { fetch('/api/qwerty', {
         method: 'POST',
@@ -23,9 +24,9 @@ function Submit() {
         .catch(error => console.log(error))
     };
 
-    formData.append('mac', document.querySelector('.MacInput').value);
-    formData.append('sum', document.querySelector('.AmountInput').value);
-    formData.append('token', token);
+    formData['mac'] = document.querySelector('.MacInput').value;
+    formData['sum'] = document.querySelector('.AmountInput').value;
+    formData['code'] = token;
 
     send_message(JSON.stringify(formData));
 

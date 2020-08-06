@@ -9,12 +9,12 @@ app = Flask(__name__, static_folder='static')
 
 testing = True
 
-message_from_ui = {}
-credentials = pika.PlainCredentials("rabbitmq", "rabbitmq")
-parameters = pika.ConnectionParameters("rmq", 5672, "/", credentials)
-connection = pika.BlockingConnection(parameters)
-channel = connection.channel()
-channel.queue_declare(queue='api')
+# message_from_ui = {}
+# credentials = pika.PlainCredentials("rabbitmq", "rabbitmq")
+# parameters = pika.ConnectionParameters("rmq", 5672, "/", credentials)
+#connection = pika.BlockingConnection(parameters)
+#channel = connection.channel()
+#channel.queue_declare(queue='api')
 
 @app.route('/')
 @app.route('/<path:path>')
@@ -49,7 +49,7 @@ def get_message():
 
 @app.route('/auth', methods=['GET', 'POST'])
 def request_auth():    
-    return redirect(f'/form=?code={request.args.get("code")}')
+    return redirect(f'/form?code={request.args.get("code")}')
 
 
 if __name__ == "__main__":
