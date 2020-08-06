@@ -8,6 +8,7 @@ channel = pika.BlockingConnection(pika.ConnectionParameters(
 # Подключение к каналу
 channel.queue_declare(queue='test')  # Писать свой канал
 
+
 # Функция, которая обрабатывает все запросы
 def callback(a, b, c, body):  # Тело запроса (json) находится в body
     ans = json.loads(body)  # Json - строка  =>  Python объект (словарь)
