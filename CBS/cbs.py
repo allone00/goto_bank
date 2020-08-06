@@ -42,6 +42,9 @@ def pennyrate(mark: int):  # todo: поправить ставки
 
 
 def table(credit, transactions):
+    """
+    Возвращает таблицу по кредиту в виде двухмерного массива
+    """
     money, rate, penny, start, days = credit["money"], credit["rate"], credit["penny"], credit["start"], credit["days"]
     transactions_per_day = [None for _ in range(days+1)]
     for transaction in transactions:
@@ -122,7 +125,6 @@ def send(queue, ans):
 
 def callback(a, b, c, body):
     body = json.loads(body)
-    print("дааааааа")
     if body["type"] == "table":
         send("api", {"type": "table", "table": table(body["credit"], body["transactions"])})
     else:
