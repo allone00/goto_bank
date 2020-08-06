@@ -1,6 +1,6 @@
 import pika
 import json
-from app import fake_variable
+# from app import
 
 credentials = pika.PlainCredentials("rabbitmq", "rabbitmq")
 parameters = pika.ConnectionParameters("rmq", 5672, "/", credentials)

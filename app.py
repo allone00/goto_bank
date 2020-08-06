@@ -7,18 +7,20 @@ import json
 import pika
 app = Flask(__name__, static_folder='static')
 
-testing = True
-
+token = ''
 message_from_ui = {}
+body = {}
+testing = True
 credentials = pika.PlainCredentials("rabbitmq", "rabbitmq")
 parameters = pika.ConnectionParameters("rmq", 5672, "/", credentials)
 connection = pika.BlockingConnection(parameters)
 channel = connection.channel()
 channel.queue_declare(queue='api')
+channel.queue_declare(queue='bd')
 
 @app.route('/')
 @app.route('/<path:path>')
-def hello_world(path='/'):
+def hello_world():
     return render_template('auth.html')
 
 @app.route('/api/qwerty', methods=['GET','POST'])
@@ -40,15 +42,27 @@ def get_message():
     channel.basic_publish(exchange='',
                     routing_key='db',
                     body=json.dumps(transferring_to_db))
-
+    return token
 
 @app.route('/auth', methods=['GET', 'POST'])
-def request_auth():    
+def request_auth():
     return redirect(f'/form?code={request.args.get("code")}')
+def callback(ch, method, properties, body):
+    body = json.loads(body)
 
+channel.basic_consume(on_message_callback=callback, queue='api', auto_ack=False)
+
+@app.route('/api/bid', methods=['POST'])
+def send_message():
+    global body
+    url = 'http://localhost:8081/api/bid'
+    x = requests.post(url, data=body)
+    message_to_ui = json.dumps(x)
+    return message_to_ui
 
 if __name__ == "__main__":
     # print " [x] Sent 'Hello World!'
     logging.info(os.environ.get('PROD', 8080))
     app.run(host='0.0.0.0', port=os.environ.get('PROD', 8080), debug=True)
 
+channel.start_consuming()
