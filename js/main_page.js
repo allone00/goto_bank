@@ -11,7 +11,7 @@ function Submit() {
 
     let token = url.slice(7, url.length);
 
-    const send_message = (formData) => { fetch('https://bank.goto.msk.ru/api/qwerty', {
+    const send_message = (formData) => { fetch('/api/qwerty', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
