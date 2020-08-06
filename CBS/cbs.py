@@ -41,7 +41,8 @@ def pennyrate(mark: int):  # todo: поправить ставки
     ][mark - 1]
 
 
-def table(money, rate, penny, start, days, transactions):
+def table(credit, transactions):
+    money, rate, penny, start, days = credit["money"], credit["rate"], credit["penny"], credit["start"], credit["days"]
     transactions_per_day = [None for _ in range(days+1)]
     for transaction in transactions:
         day = (transaction["date"] - start) // 12 + 1
@@ -127,7 +128,12 @@ def send(queue, ans):
 
 def callback(a, b, c, body):
     body = json.loads(body)
-    print(body)
+    print("дааааааа")
+    if body["type"] == "table":
+        send("api", {"type": "table", "table": table(body["credit"], body["transactions"])})
+    else:
+        print("sber", end="")
+        exit(code="bonk")
 
 
 if __name__ == "__main__":
