@@ -40,8 +40,7 @@ class Credit(base):
     approved=Column('approved',Boolean)
     full_name=Column('full_name',String(32))
     
-    def __init__(self,user_hash=None,sum_=None,interest=None,penny_rate=None,approved=None,full_name=None,user_email=None):
-        self.user_hash = user_hash
+    def __init__(self,sum_=None,interest=None,penny_rate=None,approved=None,full_name=None,user_email=None):
         self.sum = sum_
         self.interest = interest
         self.penny_rate = penny_rate
@@ -67,6 +66,7 @@ def creditExists(user_name,session):
 
 def callback(ch, method, properties, body):
     global session
+    print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
     body = json.loads(body)
     #test if pika is working
     print("Got a message")
@@ -76,6 +76,7 @@ def callback(ch, method, properties, body):
 
 
     if(body['function']=="ncredit"):
+        print(body)
         # check if user exists
         # if user does not exist create a new user
         if(userExists(body['full_name'], session)==False):

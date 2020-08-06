@@ -7,12 +7,12 @@ import json
 import pika
 app = Flask(__name__, static_folder='static')
 
-#message_from_ui = {}
-#credentials = pika.PlainCredentials("rabbitmq", "rabbitmq")
-#parameters = pika.ConnectionParameters("rmq", 5672, "/", credentials)
-#connection = pika.BlockingConnection(parameters)
-#channel = connection.channel()
-#channel.queue_declare(queue='api')
+message_from_ui = {}
+credentials = pika.PlainCredentials("rabbitmq", "rabbitmq")
+parameters = pika.ConnectionParameters("rmq", 5672, "/", credentials)
+connection = pika.BlockingConnection(parameters)
+channel = connection.channel()
+channel.queue_declare(queue='api')
 
 @app.route('/')
 @app.route('/<path:path>')
@@ -21,17 +21,8 @@ def hello_world(path='/'):
 
 @app.route('/api/qwerty', methods=['GET'])
 def get_message():
-    global message_from_ui
+    app.logger.info("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa11111")
     message_from_ui = request.json()
-    print(message_from_ui)
-
-# @app.route('/api/get_token', methods=['POST'])
-# # def get_t():
-
-
-@app.route('/auth', methods=['GET', 'POST'])
-def request_auth():
-    global message_from_ui
     value = request.args.get('code')
     url = 'https://stonks.goto.msk.ru/o/token/'
     myobj = {'client_id': 'M2mY5d4b6NcVKxr2XqKXSxZgpk78WK6ZaU3IxYDd',
@@ -40,15 +31,22 @@ def request_auth():
             'code': value}
     x = requests.post(url, data=myobj)
     token = json.loads(x.text)
-
+    app.logger.info("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa22222")
     #get user info by token
-
-    info = json.loads( requests.post("http://stonks.goto.msk.ru/api/bank/",headers={'Authorization':f'Bearer {token}'}) )
     
+    info = json.loads( requests.post("http://stonks.goto.msk.ru/api/bank/",headers={'Authorization':f'Bearer {token}'}) )
     transferring_to_db = {"function": "ncredit", "user_hash": token, "sum": message_from_ui["sum"], "mac_address": message_from_ui["mac"], "user_email":info["email"], "full_name":(info["first_name"]+info["last_name"])}
     channel.basic_publish(exchange='',
                     routing_key='db',
                     body=json.dumps(transferring_to_db))
+    app.logger.info("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa333333")
+
+# @app.route('/api/get_token', methods=['POST'])
+# # def get_t():
+
+
+@app.route('/auth', methods=['GET', 'POST'])
+def request_auth():    
     return redirect(f'/form=?token={token}')
 
 
