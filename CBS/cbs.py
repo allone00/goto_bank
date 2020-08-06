@@ -2,10 +2,11 @@
 Добро пожаловать в АБС всея GoTo!
 """
 import json
+
 import pika
 
 
-def interate(mark: int):  # todo: подправить ставки
+def interate(mark: int):  # todo: подправить ставки (когда-нибудь)
     """
     Возвращает ставку по кредиту
     """
@@ -23,7 +24,7 @@ def interate(mark: int):  # todo: подправить ставки
     ][mark - 1]
 
 
-def pennyrate(mark: int):  # todo: поправить ставки
+def pennyrate(mark: int):  # todo: поправить ставки (когда-нибудь)
     """
     Возвращает ставку по неуплате
     """
@@ -46,7 +47,7 @@ def table(credit, transactions):
     Возвращает таблицу по кредиту в виде двухмерного массива
     """
     money, rate, penny, start, days = credit["money"], credit["rate"], credit["penny"], credit["start"], credit["days"]
-    transactions_per_day = [None for _ in range(days+1)]
+    transactions_per_day = [None for _ in range(days + 1)]
     for transaction in transactions:
         day = (transaction["date"] - start) // 12 + 1
         transactions_per_day[day] = {"money": transaction["money"], "hours": (transaction["date"] - start) % 12}
