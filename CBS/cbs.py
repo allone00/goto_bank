@@ -131,7 +131,12 @@ def callback(a, b, c, body):
     Обрабатывает все запросы от RMQ
     """
     body = json.loads(body)
+<<<<<<< HEAD
+    print("дааааааа")
+    if body["function"] == "table":
+=======
     if body["type"] == "table":
+>>>>>>> 9dd59fe414d2d503948ad3fc0f18873f0aaf285e
         send("api", {"type": "table", "table": table(body["credit"], body["transactions"])})
     else:
         print("sber", end="")
@@ -143,4 +148,4 @@ if __name__ == "__main__":
         "rmq", 5672, "/", pika.PlainCredentials("rabbitmq", "rabbitmq"))).channel()
     channel.queue_declare(queue='cbs')
     channel.basic_consume(on_message_callback=callback, queue='cbs', auto_ack=False)
-    channel.start_consuming()
+    #channel.start_consuming()
