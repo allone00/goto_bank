@@ -25,7 +25,7 @@ export class FirstPage extends React.Component {
 
     AuthButton = () => {
         return <a className={'AuthButton'} value={'auth'}
-                  href={"https://stonks.goto.msk.ru/o/authorize/?state=random_state_string&client_id=rvAyzLvmASDEw1DCDMShbdjNpsPR6I89IRiGgpoL&response_type=code"}>
+                  href={"https://stonks.goto.msk.ru/o/authorize/?state=random_state_string&client_id=M2mY5d4b6NcVKxr2XqKXSxZgpk78WK6ZaU3IxYDd&response_type=code"}>
             Auth!
         </a>;
     }

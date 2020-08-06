@@ -58,8 +58,8 @@ def get_message():
     message_from_ui =  eval(list(request.form.to_dict().keys())[0])
     value = message_from_ui['code']
     url = 'https://stonks.goto.msk.ru/o/token/'
-    myobj = {'client_id': 'rvAyzLvmASDEw1DCDMShbdjNpsPR6I89IRiGgpoL', #if testing else 'M2mY5d4b6NcVKxr2XqKXSxZgpk78WK6ZaU3IxYDd',
-            'client_secret': 'nIUUEC0sQSvehn03I4UTIHcEZmT7yCjn5uUzwD02PqbikQNid5jFRWlulGXBt1gQsmlEWAgirCpsUwsOmMQFx3bfgq0nxuvDZEl31lM1sSDvRLrpevcTsh9NNxe5xXIs',# if testing else '81ASvQUU6xYJzGei9r1HwkIcR3xZgFHrkMBlHtl5FifykxbbodQNPRixEQ5RwN4K5MSJIdqn4xXLWxqKDzfQ5kxPzZoWde6OsZ1rmaz8TKMNA8aOMHQ4Raxj8okxo2bs',
+    myobj = {'client_id': 'M2mY5d4b6NcVKxr2XqKXSxZgpk78WK6ZaU3IxYDd', #if testing else 'M2mY5d4b6NcVKxr2XqKXSxZgpk78WK6ZaU3IxYDd',
+            'client_secret': '81ASvQUU6xYJzGei9r1HwkIcR3xZgFHrkMBlHtl5FifykxbbodQNPRixEQ5RwN4K5MSJIdqn4xXLWxqKDzfQ5kxPzZoWde6OsZ1rmaz8TKMNA8aOMHQ4Raxj8okxo2bs',# if testing else '81ASvQUU6xYJzGei9r1HwkIcR3xZgFHrkMBlHtl5FifykxbbodQNPRixEQ5RwN4K5MSJIdqn4xXLWxqKDzfQ5kxPzZoWde6OsZ1rmaz8TKMNA8aOMHQ4Raxj8okxo2bs',
             'grant_type': 'authorization_code',
             'code': value}
     x = requests.post(url, data=myobj)
