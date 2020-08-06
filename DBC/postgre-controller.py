@@ -39,7 +39,6 @@ class Credit(base):
     penny_rate=Column('penny_rate',Float)
     approved=Column('approved',Boolean)
     full_name=Column('full_name',String(32))
-    transactions = relationship("Transactions")  # CBS
     
     def __init__(self,sum_=None,interest=None,penny_rate=None,approved=None,full_name=None,user_email=None):
         self.sum = sum_
@@ -57,7 +56,7 @@ class Transactions(base):
     money = Column("money", Integer)
     day = Column("day", Integer)
     hours_late = Column("hours_late", Integer)
-    credit_id = Column(Integer, ForeignKey('Transactions.id'))
+    credit_id = Column('credit_id', Integer)
 
 
 base.metadata.create_all(db)
