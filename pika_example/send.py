@@ -6,7 +6,7 @@ def send(  # Отправка сообщений
         queue,  # Канал (кому надо отправить)
         ans  # Информация (что надо отправить)
 ):
-    body = json.dumps(ans)
+    body = json.dumps(ans)  # obj -> json str
 
     # Подключение к брокеру сообщений
     connection = pika.BlockingConnection(pika.ConnectionParameters(
@@ -17,7 +17,7 @@ def send(  # Отправка сообщений
     channel.queue_declare(queue=queue)
 
     # Отправка сообщения
-    channel.basic_publish(exchange='',  # Точка обмена
+    channel.basic_publish(exchange='',  # Точка обмена (Не трогать)
                           routing_key=queue,  # Имя очереди
                           body=body)  # Текст очереди (позже использовать json)
 

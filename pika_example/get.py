@@ -19,4 +19,3 @@ channel.basic_consume(on_message_callback=callback, queue='test', auto_ack=False
 
 # Начать прослушивание канала
 channel.start_consuming()
-# Для того, что бы закончить программу, надо нажать CTRL + C
