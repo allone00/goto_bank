@@ -22,12 +22,20 @@ function get_json() {
 export class AdminPage extends React.Component {
     Header = () => {
         return <header className={'header'}>
-            <h2 className={'header-title'}>Заявки</h2>
+            <nav className={'nav'}>
+                <h2 className={'nav-elem'}>Имя</h2>
+                <h2 className={'nav-elem'}>Сумма</h2>
+                <h2 className={'nav-elem'}>Проценты</h2>
+                <h2 className={'nav-elem'}>Статус</h2>
+            </nav>
         </header>;
     }
 
     Main = () => {
-        return <main className={'Main'}>{this.List()}</main>;
+        return <main className={'Main'}>
+            {this.List()}
+            {this.Button()}
+        </main>;
     }
 
     List = () => {
@@ -38,15 +46,27 @@ export class AdminPage extends React.Component {
             {'token': '123', 'name': 'Иван Петрович', 'user_email': 'example@example.com', 'mac': 'aa-aa-aa', 'percents': 0.36, 'sum': 12000},
             {'token': '123', 'name': 'Иван Петрович', 'user_email': 'example@example.com', 'mac': 'aa-aa-aa', 'percents': 0.36, 'sum': 12000},
             {'token': '123', 'name': 'Иван Петрович', 'user_email': 'example@example.com', 'mac': 'aa-aa-aa', 'percents': 0.36, 'sum': 12000},
+            {'token': '123', 'name': 'Иван Петрович', 'user_email': 'example@example.com', 'mac': 'aa-aa-aa', 'percents': 0.36, 'sum': 12000},
+            {'token': '123', 'name': 'Иван Петрович', 'user_email': 'example@example.com', 'mac': 'aa-aa-aa', 'percents': 0.36, 'sum': 12000},
+            {'token': '123', 'name': 'Иван Петрович', 'user_email': 'example@example.com', 'mac': 'aa-aa-aa', 'percents': 0.36, 'sum': 12000},
+            {'token': '123', 'name': 'Иван Петрович', 'user_email': 'example@example.com', 'mac': 'aa-aa-aa', 'percents': 0.36, 'sum': 12000},
             {'token': '123', 'name': 'Иван Петрович', 'user_email': 'example@example.com', 'mac': 'aa-aa-aa', 'percents': 0.36, 'sum': 12000}];
 
         const listItems = data.map((item) =>
-            <li>{item.name} {item.sum} {item.percents}</li>
+            <li className={'list-elem'}><span>{item.name}</span> <input className={'input'} type={'number'} value={item.sum}/> <input className={'input'} type={'number'} value={item.percents * 100}/>
+                <select className={'select'}>
+                    <option value={'true'}>Одобрено</option>
+                    <option value={'false'}>Не одобрено</option>
+                </select>
+            </li>
         );
 
-        return <ul>{listItems}</ul>;
+        return <ul className={'list'}>{listItems}</ul>;
     }
 
+    Button = () => {
+        return <a className={'button'} href={'#'}>Click!</a>;
+    }
 
     render() {
         return <div>
