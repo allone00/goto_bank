@@ -1,9 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import '../css/auth.css';
 import '../css/basic.css';
-import '../css/login.css';
-
+import '../css/main.css';
 
 function Submit() {
     let formData = new FormData();
@@ -35,7 +33,6 @@ function Submit() {
     document.querySelector('.AmountInput').value = '';
 
     alert('Мы рассмотрим заявку в течении 72 часов!\n С любовью GoToBank!');
-
 }
 
 
