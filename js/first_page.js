@@ -1,35 +1,18 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import '../css/auth.css';
 import '../css/basic.css';
 
 export class FirstPage extends React.Component {
-    constructor(props) {
-        super(props);
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.state = {};
-    }
-
-    handleChange(event) {
-        this.setState({[event.target.name]: event.target.value});
-    }
-
-    handleSubmit(event) {
-        alert(this.state);
-        event.preventDefault();
-    }
-
     Main = () => {
         return <main className={'main'}>
             {this.Inner_container()}</main>;
     }
     ContainerTitle = () => {
-        return <h1 className={'container_title'}>GoToCredit</h1>;
+        return <h1 className={'Container_title'}>GoToCredit</h1>;
     }
 
     ContainerText = () => {
-        return <h2 className={'container_text'}>Всего 3 шага до вашей мечты!</h2>;
+        return <h2 className={'Container_text'}>Всего 3 шага до вашей мечты!</h2>;
     }
 
     Footer = () => {
@@ -42,15 +25,14 @@ export class FirstPage extends React.Component {
 
     AuthButton = () => {
         return <a className={'AuthButton'} value={'auth'}
-                  href={"https://stonks.goto.msk.ru/o/authorize/?state=random_state_string&client_id=M2mY5d4b6NcVKxr2XqKXSxZgpk78WK6ZaU3IxYDd&response_type=code"}>
+                  href={"https://stonks.goto.msk.ru/o/authorize/?state=random_state_string&client_id=rvAyzLvmASDEw1DCDMShbdjNpsPR6I89IRiGgpoL&response_type=code"}>
             Auth!
         </a>;
     }
 
     Inner_container = () => {
-        return <div className={'inner_container'}>
+        return <div className={'Inner_container'}>
             {this.ContainerTitle()}
-            {this.ContainerText()}
             {this.AuthButton()}
         </div>;
     }

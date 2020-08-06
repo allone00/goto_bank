@@ -1,8 +1,5 @@
-import React, {Component} from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
-import '../css/auth.css';
-import '../css/basic.css';
-import '../css/login.css';
 
 import {
     BrowserRouter as Router,
@@ -16,15 +13,16 @@ import {
 
 import {FirstPage} from "./first_page";
 import {MainPage} from "./main_page";
+import {AdminPage} from './admin';
 
 class App extends React.Component {
     render() {
         return <Router>
-        <Switch>
-
-            <Route path={'/form'} component={MainPage}/>
-            <Route path={'/'} component={FirstPage}/>
-        </Switch>
+            <Switch>
+                <Route path={'/admin'} component={AdminPage}/>
+                <Route path={'/form'} component={MainPage}/>
+                <Route path={'/'} component={FirstPage}/>
+            </Switch>
         </Router>;
     }
 }

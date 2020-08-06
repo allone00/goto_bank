@@ -1,19 +1,18 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import '../css/auth.css';
 import '../css/basic.css';
-import '../css/login.css';
-
+import '../css/main.css';
 
 function Submit() {
-    let formData = new FormData();
+    let formData = {};
 
     let requestUrl = 'https://bank.goto.msk.ru/form/';
     let url = window.location.search;
 
-    let token = url.slice(7, url.length);
+    let token = url.slice(6, url.length);
 
-    const send_message = (formData) => { fetch('https://bank.goto.msk.ru/api/qwerty', {
+    // console.log(url);
+
+    const send_message = (formData) => { fetch('/api/qwerty', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
@@ -25,9 +24,9 @@ function Submit() {
         .catch(error => console.log(error))
     };
 
-    formData.append('mac', document.querySelector('.MacInput').value);
-    formData.append('sum', document.querySelector('.AmountInput').value);
-    formData.append('token', token);
+    formData['mac'] = document.querySelector('.MacInput').value;
+    formData['sum'] = document.querySelector('.AmountInput').value;
+    formData['code'] = token;
 
     send_message(JSON.stringify(formData));
 
@@ -35,7 +34,6 @@ function Submit() {
     document.querySelector('.AmountInput').value = '';
 
     alert('Мы рассмотрим заявку в течении 72 часов!\n С любовью GoToBank!');
-
 }
 
 

@@ -1,7 +1,7 @@
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String, DateTime, Boolean, Float
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, relationship
 import pika
 import json
 
@@ -40,14 +40,24 @@ class Credit(base):
     approved=Column('approved',Boolean)
     full_name=Column('full_name',String(32))
     
-    def __init__(self,user_hash=None,sum_=None,interest=None,penny_rate=None,approved=None,full_name=None,user_email=None):
-        self.user_hash = user_hash
+    def __init__(self,sum_=None,interest=None,penny_rate=None,approved=None,full_name=None,user_email=None):
         self.sum = sum_
         self.interest = interest
         self.penny_rate = penny_rate
         self.approved = approved
         self.full_name = full_name
         self.user_email = user_email
+
+
+# CBS
+class Transactions(base):
+    __tablename__ = "Transactions"
+    id = Column(Integer, primary_key=True)
+    money = Column("money", Integer)
+    day = Column("day", Integer)
+    hours_late = Column("hours_late", Integer)
+    credit_id = Column('credit_id', Integer)
+
 
 base.metadata.create_all(db)
 
@@ -76,6 +86,7 @@ def callback(ch, method, properties, body):
 
 
     if(body['function']=="ncredit"):
+        print(body)
         # check if user exists
         # if user does not exist create a new user
         if(userExists(body['full_name'], session)==False):
@@ -85,6 +96,38 @@ def callback(ch, method, properties, body):
         session.commit()
         result = True
         return result
+
+    if(body["function"]=="listCredits"):
+        credits = []
+        for cr in session.query(Credit).all():
+            credits.append({"id":cr.id, "full_name":cr.full_name, "interest":cr.interest, "sum":cr.sum})
+        
+        channel.basic_publish(exchange='', routing_key='api', body=json.dumps({'function':'listCredits_','credits':credits}))  
+        return True
+
+    # CBS
+    if(body["function"] == "table"):
+        # credit =
+        # ans = {"credit": {
+        #     "sum": credit.sum,
+        #     "interest": credit.interest,
+        #     "penny_rate": credit.penny_rate
+        # }, "transactions" [{
+        #     "money": transaction.money
+        #     "day": transaction.day
+        #     "hours_late": transaction.hours_late
+        # } for transaction in transactions]
+        # }
+        ans = {"type": "table", "sber": "bonk"}  # Test
+
+        body = json.dumps(ans)
+        connection = pika.BlockingConnection(pika.ConnectionParameters(
+            "rmq", 5672, "/", pika.PlainCredentials("rabbitmq", "rabbitmq")))
+        channel = connection.channel()
+        channel.queue_declare(queue="cbs")
+        channel.basic_publish(exchange='', routing_key="cbs", body=body)
+        connection.close()
+
 
 credentials = pika.PlainCredentials("rabbitmq", "rabbitmq")
 parameters = pika.ConnectionParameters("rmq", 5672, "/", credentials)
