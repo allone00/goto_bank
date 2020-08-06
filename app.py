@@ -5,6 +5,9 @@ import os
 import logging
 import json
 import pika
+import time
+import _thread
+from flask import jsonify
 app = Flask(__name__, static_folder='static')
 
 testing = True
@@ -16,10 +19,38 @@ connection = pika.BlockingConnection(parameters)
 channel = connection.channel()
 channel.queue_declare(queue='api')
 
+def callback(ch, method, properties, body):
+    global credits
+    body = json.loads(body)
+
+    if(body["function"]=="listCredits_"):
+        app.logger.info("Got credits!")
+        credits = body["credits"]
+        app.logger.info(credits)
+
+channel.basic_consume(on_message_callback=callback, queue='db', auto_ack=False)
+channel.start_consuming()
+
+
 @app.route('/')
 @app.route('/<path:path>')
 def hello_world(path='/'):
     return render_template('auth.html')
+
+@app.route('/api/asdf')
+def returnCredits():
+    credits = None
+    channel.basic_publish(exchange='', routing_key="cbs", body=json.dumps({"function":"listCredits"}))
+    
+
+    
+    #wait for credits, then return the info
+    while(credits is None):
+        app.logger.info("a")
+        time.sleep(0.01)
+
+    app.logger.info(credits)
+    return jsonify(credits)
 
 @app.route('/api/qwerty', methods=['GET','POST'])
 def get_message():

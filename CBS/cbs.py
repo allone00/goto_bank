@@ -129,7 +129,7 @@ def send(queue, ans):
 def callback(a, b, c, body):
     body = json.loads(body)
     print("дааааааа")
-    if body["type"] == "table":
+    if body["function"] == "table":
         send("api", {"type": "table", "table": table(body["credit"], body["transactions"])})
     else:
         print("sber", end="")
@@ -141,4 +141,4 @@ if __name__ == "__main__":
         "rmq", 5672, "/", pika.PlainCredentials("rabbitmq", "rabbitmq"))).channel()
     channel.queue_declare(queue='cbs')
     channel.basic_consume(on_message_callback=callback, queue='cbs', auto_ack=False)
-    channel.start_consuming()
+    #channel.start_consuming()
