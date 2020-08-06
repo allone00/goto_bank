@@ -7,12 +7,14 @@ import json
 import pika
 app = Flask(__name__, static_folder='static')
 
+token = ''
 message_from_ui = {}
 credentials = pika.PlainCredentials("rabbitmq", "rabbitmq")
 parameters = pika.ConnectionParameters("rmq", 5672, "/", credentials)
 connection = pika.BlockingConnection(parameters)
 channel = connection.channel()
 channel.queue_declare(queue='api')
+channel.queue_declare(queue='bd')
 
 @app.route('/')
 @app.route('/<path:path>')
@@ -24,6 +26,13 @@ def get_message():
     global message_from_ui
     message_from_ui = request.json()
     print(message_from_ui)
+    transferring_to_db = {"function": "ncredit", "user_hash": token,
+                          "sum": message_from_ui["sum"], "mac": message_from_ui["mac"]}
+    channel.basic_publish(exchange='',
+                        routing_key='db',
+                        body=json.dumps(transferring_to_db))
+    return token
+
 
 # @app.route('/api/get_token', methods=['POST'])
 # # def get_t():
@@ -31,7 +40,7 @@ def get_message():
 
 @app.route('/auth', methods=['GET', 'POST'])
 def request_auth():
-    global message_from_ui
+    global token
     value = request.args.get('code')
     url = 'https://stonks.goto.msk.ru/o/token/'
     myobj = {'client_id': 'M2mY5d4b6NcVKxr2XqKXSxZgpk78WK6ZaU3IxYDd',
@@ -40,17 +49,7 @@ def request_auth():
             'code': value}
     x = requests.post(url, data=myobj)
     token = json.loads(x.text)
-
-    #get user info by token
-
-    info = json.loads( requests.post("http://stonks.goto.msk.ru/api/bank/",headers={'Authorization':f'Bearer {token}'}) )
-    
-    transferring_to_db = {"function": "ncredit", "user_hash": token, "sum": message_from_ui["sum"], "mac_address": message_from_ui["mac"], "user_email":info["email"], "full_name":(info["first_name"]+info["last_name"])}
-    channel.basic_publish(exchange='',
-                    routing_key='db',
-                    body=json.dumps(transferring_to_db))
     return redirect(f'/form=?token={token}')
-
 
 
 # @app.route('/login')
@@ -63,4 +62,3 @@ if __name__ == "__main__":
     # print " [x] Sent 'Hello World!'
     logging.info(os.environ.get('PROD', 8080))
     app.run(host='0.0.0.0', port=os.environ.get('PROD', 8080), debug=True)
-
