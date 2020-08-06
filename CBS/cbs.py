@@ -110,12 +110,6 @@ def table(credit, transactions):
     return s
 
 
-def _f(money, hours, mark):  # todo: убрать после поправок ставок
-    print(f"interate = {money * ((interate(mark) + 1) ** (hours // 4)) - money},\n"
-          f"pennyrate = {money * pennyrate(mark)}.")
-    return None
-
-
 def send(queue, ans):
     body = json.dumps(ans)
     connection = pika.BlockingConnection(pika.ConnectionParameters(
