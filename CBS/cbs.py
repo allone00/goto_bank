@@ -122,7 +122,6 @@ def send(queue, ans):
 
 def callback(a, b, c, body):
     body = json.loads(body)
-    print("дааааааа")
     if body["type"] == "table":
         send("api", {"type": "table", "table": table(body["credit"], body["transactions"])})
     else:
