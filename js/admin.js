@@ -4,7 +4,7 @@ import '../css/basic.css';
 
 function get_json() {
 
-    let get_message = fetch('./api/application.json')
+    let get_message = fetch('/api/credit')
         .then((response) => {
                 if (response.status !== 200) {
                     console.log(error);
@@ -16,7 +16,50 @@ function get_json() {
             }
         )
         .catch(error => console.log(error));
+
     return get_message;
+}
+
+function send_data() {
+
+    let parent = document.querySelector('.list');
+
+    let data = {};
+
+    let list_elements = document.querySelectorAll('.list-elem');
+
+    let sections = document.querySelectorAll('.select');
+
+    for (let i = 0; i < list_elements.length; ++i) {
+        data[`${list_elements[i].dataset.id}`] = sections[i].value == 'true' ? true : false;
+    }
+
+    // console.log(data, list_elements, sections);
+
+    if (parent.hasChildNodes()) {
+        for (let elem in document.querySelectorAll('.list-elem')) {
+            parent.remove(elem);
+        }
+    }
+    else {
+        alert('Заявок не обнаружено!');
+    }
+
+
+    const send_message = (data) => { fetch('/api/credit', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: data
+
+    })
+        .then(response => console.log('message send with fetch!'))
+        .catch(error => console.log(error))
+    };
+
+    send_message(data);
+
 }
 
 export class AdminPage extends React.Component {
@@ -39,21 +82,9 @@ export class AdminPage extends React.Component {
     }
 
     List = () => {
-        let data = [{'token': '123', 'name': 'Иван Петрович', 'user_email': 'example@example.com', 'mac': 'aa-aa-aa', 'percents': 0.36, 'sum': 12000},
-            {'token': '123', 'name': 'Иван Петрович', 'user_email': 'example@example.com', 'mac': 'aa-aa-aa', 'percents': 0.36, 'sum': 12000},
-            {'token': '123', 'name': 'Иван Петрович', 'user_email': 'example@example.com', 'mac': 'aa-aa-aa', 'percents': 0.36, 'sum': 12000},
-            {'token': '123', 'name': 'Иван Петрович', 'user_email': 'example@example.com', 'mac': 'aa-aa-aa', 'percents': 0.36, 'sum': 12000},
-            {'token': '123', 'name': 'Иван Петрович', 'user_email': 'example@example.com', 'mac': 'aa-aa-aa', 'percents': 0.36, 'sum': 12000},
-            {'token': '123', 'name': 'Иван Петрович', 'user_email': 'example@example.com', 'mac': 'aa-aa-aa', 'percents': 0.36, 'sum': 12000},
-            {'token': '123', 'name': 'Иван Петрович', 'user_email': 'example@example.com', 'mac': 'aa-aa-aa', 'percents': 0.36, 'sum': 12000},
-            {'token': '123', 'name': 'Иван Петрович', 'user_email': 'example@example.com', 'mac': 'aa-aa-aa', 'percents': 0.36, 'sum': 12000},
-            {'token': '123', 'name': 'Иван Петрович', 'user_email': 'example@example.com', 'mac': 'aa-aa-aa', 'percents': 0.36, 'sum': 12000},
-            {'token': '123', 'name': 'Иван Петрович', 'user_email': 'example@example.com', 'mac': 'aa-aa-aa', 'percents': 0.36, 'sum': 12000},
-            {'token': '123', 'name': 'Иван Петрович', 'user_email': 'example@example.com', 'mac': 'aa-aa-aa', 'percents': 0.36, 'sum': 12000},
-            {'token': '123', 'name': 'Иван Петрович', 'user_email': 'example@example.com', 'mac': 'aa-aa-aa', 'percents': 0.36, 'sum': 12000}];
-
+        let data = get_json();
         const listItems = data.map((item) =>
-            <li className={'list-elem'}><span>{item.name}</span> <input className={'input'} type={'number'} value={item.sum}/> <input className={'input'} type={'number'} value={item.percents * 100}/>
+            <li className={'list-elem'} data-id={`${item.id}`}><span>{item.full_name}</span> <input className={'input'} type={'number'} defaultValue={item.sum}/> <input className={'input'} type={'number'} defaultValue={item.interest * 100}/>
                 <select className={'select'}>
                     <option value={'true'}>Одобрено</option>
                     <option value={'false'}>Не одобрено</option>
@@ -61,11 +92,13 @@ export class AdminPage extends React.Component {
             </li>
         );
 
+        // console.log(this.props);
+
         return <ul className={'list'}>{listItems}</ul>;
     }
 
     Button = () => {
-        return <a className={'button'} href={'#'}>Click!</a>;
+        return <a className={'button'} href={'#'} onClick={send_data}>Click!</a>;
     }
 
     render() {
