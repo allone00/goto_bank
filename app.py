@@ -19,8 +19,8 @@ parameters = pika.ConnectionParameters("rmq", 5672, "/", credentials)
 connection = pika.BlockingConnection(parameters)
 channel = connection.channel()
 channel.queue_declare(queue='api')
-channel.queue_declare(queue='bd')
 
+"""
 def callback(ch, method, properties, body):
     global credits
     body = json.loads(body)
@@ -31,14 +31,14 @@ def callback(ch, method, properties, body):
         app.logger.info(credits)
 
 channel.basic_consume(on_message_callback=callback, queue='db', auto_ack=False)
-channel.start_consuming()
+channel.start_consuming()"""
 
 
 @app.route('/')
 @app.route('/<path:path>')
-def hello_world():
+def hello_world(path='/'):
     return render_template('auth.html')
-
+"""
 @app.route('/api/asdf')
 def returnCredits():
     credits = None
@@ -50,7 +50,7 @@ def returnCredits():
         time.sleep(0.01)
 
     app.logger.info(credits)
-    return jsonify(credits)
+    return jsonify(credits)"""
 
 @app.route('/api/qwerty', methods=['GET','POST'])
 def get_message():

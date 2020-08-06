@@ -131,12 +131,8 @@ def callback(a, b, c, body):
     Обрабатывает все запросы от RMQ
     """
     body = json.loads(body)
-<<<<<<< HEAD
     print("дааааааа")
     if body["function"] == "table":
-=======
-    if body["type"] == "table":
->>>>>>> 9dd59fe414d2d503948ad3fc0f18873f0aaf285e
         send("api", {"type": "table", "table": table(body["credit"], body["transactions"])})
     else:
         print("sber", end="")
